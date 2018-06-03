@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -119,6 +120,17 @@ namespace PublishPackageToNuGet
             projModel.Owners = projModel.PackageInfo?.Owners;
             projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
             projModel.Version = projModel.PackageInfo?.Version?.OriginalVersion.AddVersion();
+
+            var form = new PublishInfoForm();
+            form.Ini(projModel);
+            form.Show();
+
+            PublishInfoForm.PublishEvent = model =>
+            {
+                model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
+                MessageBox.Show("推送完成");
+                form.Close();
+            };
         }
 
         private Project GetSelectedProjInfo()

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ComponentModelHost;
@@ -11,8 +12,10 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using NuGet.Common;
 using NuGet.Packaging;
+using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
 using NuGet.VisualStudio;
 using PublishPackageToNuGet.Model;
 using PublishPackageToNuGet.Setting;
@@ -184,6 +187,79 @@ namespace PublishPackageToNuGet.Service
             int val = Convert.ToInt32(tmp[tmp.Length - 1]) + 1;
             tmp[tmp.Length - 1] = val.ToString();
             return string.Join(".", tmp);
+        }
+
+        public static string BuildPackage(this ProjModel pkg)
+        {
+            string dllPath = Path.Combine(pkg.LibDebugPath, pkg.LibName + ".dll");
+            string xmlPath = Path.Combine(pkg.LibDebugPath, pkg.LibName + ".xml");
+
+            if (!File.Exists(dllPath))
+            {
+                throw new Exception("未找到DLL文件");
+            }
+            MyPackageFile dllFile = new MyPackageFile("lib", pkg.LibName + ".dll", dllPath, pkg.NetFrameworkVersion);
+            List<IPackageFile> files = new List<IPackageFile>() { dllFile };
+            if (File.Exists(xmlPath))
+            {
+                MyPackageFile xmlFile = new MyPackageFile("lib", pkg.LibName + ".xml", xmlPath, pkg.NetFrameworkVersion);
+                files.Add(xmlFile);
+            }
+
+            ManifestMetadata data = pkg.PackageInfo ?? new ManifestMetadata
+            {
+                Authors = new List<string> { pkg.Author },
+                ContentFiles = new List<ManifestContentFiles>(),
+                Copyright = $"CopyRight © {pkg.Author} {DateTime.Now:yyyy-MM-dd HH:mm:ss}",
+                DependencyGroups = new List<PackageDependencyGroup>(),
+                Description = pkg.Desc,
+                DevelopmentDependency = false,
+                FrameworkReferences = new List<FrameworkAssemblyReference>(),
+                Id = pkg.LibName,
+                Language = null,
+                MinClientVersionString = "1.0.0.0",
+                Owners = new List<string> { pkg.Author },
+                PackageAssemblyReferences = new List<PackageReferenceSet>(),
+                PackageTypes = new List<PackageType>(),
+                ReleaseNotes = null,
+                Repository = null,
+                RequireLicenseAcceptance = false,
+                Serviceable = false,
+                Summary = null,
+                Tags = string.Empty,
+                Title = pkg.LibName,
+                Version = NuGetVersion.Parse(pkg.Version),
+            };
+
+            data.Authors = new List<string> { pkg.Author };
+            data.Copyright = $"CopyRight © {pkg.Author} {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+            data.Description = pkg.Desc;
+            data.Version = NuGetVersion.Parse(pkg.Version);
+
+            var builder = new PackageBuilder();
+            builder.Populate(data);
+            builder.Files.AddRange(files);
+
+            var packageFile = Path.GetTempFileName();
+            try
+            {
+                using (Stream stream = File.Create(packageFile))
+                {
+                    builder.Save(stream);
+                }
+            }
+            finally
+            {
+            }
+
+            return packageFile;
+        }
+
+        public static void PushToNugetSer(this string filePath, string publishKey, string publishUrl)
+        {
+            var repository = PackageRepositoryFactory.CreateRepository(publishUrl);
+            var updateResource = ThreadHelper.JoinableTaskFactory.Run(() => repository.GetResourceAsync<PackageUpdateResource>());
+            ThreadHelper.JoinableTaskFactory.Run(() => updateResource.Push(filePath, null, 999, false, s => publishKey, s => publishKey, true, NullLogger.Instance));
         }
     }
 }
