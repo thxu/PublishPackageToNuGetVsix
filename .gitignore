@@ -3,3 +3,6 @@
 ################################################################################
 
 /PublishPackageToNuGetVsix/PublishPackageToNuGet/obj/Debug
+/PublishPackageToNuGetVsix/PublishPackageToNuGet/bin/Debug
+/PublishPackageToNuGetVsix/packages
+/PublishPackageToNuGetVsix/.vs/PublishPackageToNuGetVsix/v15
