@@ -37,7 +37,8 @@
          must be a menu. -->
     <Groups>
       <Group guid="guidPublishCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+        <!--<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>-->
+          <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
     </Groups>
 
@@ -54,9 +55,9 @@
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidPublishCommandPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
         <Parent guid="guidPublishCommandPackageCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
+        <!--<Icon guid="guidImages" id="bmpPic1" />-->
         <Strings>
-          <ButtonText>Invoke PublishCommand</ButtonText>
+          <ButtonText>PublishToNuget</ButtonText>
         </Strings>
       </Button>
     </Buttons>

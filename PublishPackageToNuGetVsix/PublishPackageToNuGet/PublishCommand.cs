@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
@@ -117,9 +118,9 @@ namespace PublishPackageToNuGet
 
             projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
             projModel.Author = settingInfo.Authour;
-            projModel.Owners = projModel.PackageInfo?.Owners;
+            projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string>{ settingInfo.Authour };
             projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
-            projModel.Version = projModel.PackageInfo?.Version?.OriginalVersion.AddVersion();
+            projModel.Version = (projModel.PackageInfo?.Version?.OriginalVersion).AddVersion();
 
             var form = new PublishInfoForm();
             form.Ini(projModel);

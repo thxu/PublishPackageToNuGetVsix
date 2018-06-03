@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using PublishPackageToNuGet.Service;
 
@@ -21,24 +22,27 @@ namespace PublishPackageToNuGet.Setting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
 
             txtAuthour.Text = OptionPage.Authour;
             txtPublishKey.Text = OptionPage.PublishKey;
 
-            foreach (var sc in OptionPage.AllPackageSource)
+            if (OptionPage.AllPackageSource != null && OptionPage.AllPackageSource.Any())
             {
-                cbPackageSource.Items.Add(sc);
-            }
+                foreach (var sc in OptionPage.AllPackageSource)
+                {
+                    cbPackageSource.Items.Add(sc);
+                }
 
-            if (string.IsNullOrWhiteSpace(OptionPage.DefaultPackageSource) || !OptionPage.AllPackageSource.Contains(OptionPage.DefaultPackageSource))
-            {
-                cbPackageSource.SelectedIndex = 0;
-            }
-            else
-            {
-                cbPackageSource.SelectedItem = OptionPage.DefaultPackageSource;
+                if (string.IsNullOrWhiteSpace(OptionPage.DefaultPackageSource) || !OptionPage.AllPackageSource.Contains(OptionPage.DefaultPackageSource))
+                {
+                    cbPackageSource.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbPackageSource.SelectedItem = OptionPage.DefaultPackageSource;
+                }
             }
         }
 
