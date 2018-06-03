@@ -3,8 +3,11 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using PublishPackageToNuGet.Service;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet
@@ -89,17 +92,37 @@ namespace PublishPackageToNuGet
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "PublishCommand";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            var projInfo = GetSelectedProjInfo();
+            if (projInfo == null)
+            {
+                throw new Exception("您还未选中项目");
+            }
+
+            var projModel = projInfo.AnalysisProject();
+            if (projModel == null)
+            {
+                throw new Exception("您当前选中的项目输出类型不是DLL文件");
+            }
+
         }
+
+        private Project GetSelectedProjInfo()
+        {
+            if (!((ServiceProvider.GetServiceAsync(typeof(DTE)).Result) is DTE2 dte))
+            {
+                return null;
+            }
+            var projInfo = (Array)dte.ToolWindows.SolutionExplorer.SelectedItems;
+            foreach (UIHierarchyItem selItem in projInfo)
+            {
+                if (selItem.Object is Project item)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
     }
 }
