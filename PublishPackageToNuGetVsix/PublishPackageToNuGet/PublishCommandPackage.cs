@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
+using PublishPackageToNuGet.Setting;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet
@@ -34,7 +35,7 @@ namespace PublishPackageToNuGet
     /// </remarks>
 
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
-    //[ProvideOptionPage(typeof(OptionPageGrid), "PublishPackageSetting", "PackageSetting", 0, 0, true)]
+    [ProvideOptionPage(typeof(OptionPageGrid), "PublishPackageSetting", "PackageSetting", 0, 0, true)]
 
 
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]

@@ -8,6 +8,7 @@ using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using PublishPackageToNuGet.Service;
+using PublishPackageToNuGet.Setting;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet
@@ -105,6 +106,19 @@ namespace PublishPackageToNuGet
                 throw new Exception("您当前选中的项目输出类型不是DLL文件");
             }
 
+            OptionPageGrid settingInfo = NuGetService.GetSettingPage();
+            if (string.IsNullOrWhiteSpace(settingInfo?.DefaultPackageSource))
+            {
+                throw new Exception("请先完善包设置信息");
+            }
+
+            var tmp = NuGetService.GetAllPackageSources();
+
+            projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
+            projModel.Author = settingInfo.Authour;
+            projModel.Owners = projModel.PackageInfo?.Owners;
+            projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
+            projModel.Version = projModel.PackageInfo?.Version?.OriginalVersion.AddVersion();
         }
 
         private Project GetSelectedProjInfo()
