@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="PublishPackageToNuGet.436d4de6-e239-436a-afe7-24b9f3551e4w" Version="1.2" Language="zh-CN" Publisher="TangXu" />
+        <Identity Id="PublishPackageToNuGet.436d4de6-e239-436a-afe7-24b9f3551e4w" Version="1.3" Language="zh-CN" Publisher="TangXu" />
         <DisplayName>NuGetPackagePublishTool</DisplayName>
         <Description xml:space="preserve">A tool that allows you to quickly publish NuGet packages in vs.</Description>
     </Metadata>
