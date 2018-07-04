@@ -255,11 +255,19 @@ namespace PublishPackageToNuGet.Service
             return packageFile;
         }
 
-        public static void PushToNugetSer(this string filePath, string publishKey, string publishUrl)
+        public static bool PushToNugetSer(this string filePath, string publishKey, string publishUrl)
         {
             var repository = PackageRepositoryFactory.CreateRepository(publishUrl);
             var updateResource = ThreadHelper.JoinableTaskFactory.Run(() => repository.GetResourceAsync<PackageUpdateResource>());
-            ThreadHelper.JoinableTaskFactory.Run(() => updateResource.Push(filePath, null, 999, false, s => publishKey, s => publishKey, true, NullLogger.Instance));
+            try
+            {
+                ThreadHelper.JoinableTaskFactory.Run(() => updateResource.Push(filePath, null, 999, false, s => publishKey, s => publishKey, true, NullLogger.Instance));
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using PublishPackageToNuGet.Service;
 using PublishPackageToNuGet.Setting;
 using Task = System.Threading.Tasks.Task;
@@ -33,7 +29,7 @@ namespace PublishPackageToNuGet
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly Package package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PublishCommand"/> class.
@@ -41,9 +37,10 @@ namespace PublishPackageToNuGet
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private PublishCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private PublishCommand(Package package)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
+            OleMenuCommandService commandService = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -63,7 +60,7 @@ namespace PublishPackageToNuGet
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        private IServiceProvider ServiceProvider
         {
             get
             {
@@ -75,14 +72,14 @@ namespace PublishPackageToNuGet
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static void Initialize(Package package)
         {
             // Verify the current thread is the UI thread - the call to AddCommand in PublishCommand's constructor requires
             // the UI thread.
-            ThreadHelper.ThrowIfNotOnUIThread();
+            //ThreadHelper.ThrowIfNotOnUIThread();
 
-            OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
-            Instance = new PublishCommand(package, commandService);
+            //OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
+            Instance = new PublishCommand(package);
         }
 
         /// <summary>
@@ -94,49 +91,57 @@ namespace PublishPackageToNuGet
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            var projInfo = GetSelectedProjInfo();
-            if (projInfo == null)
+            try
             {
-                throw new Exception("您还未选中项目");
+                ThreadHelper.ThrowIfNotOnUIThread();
+
+                var projInfo = GetSelectedProjInfo();
+                if (projInfo == null)
+                {
+                    throw new Exception("您还未选中项目");
+                }
+
+                var projModel = projInfo.AnalysisProject();
+                if (projModel == null)
+                {
+                    throw new Exception("您当前选中的项目输出类型不是DLL文件");
+                }
+
+                OptionPageGrid settingInfo = NuGetService.GetSettingPage();
+                if (string.IsNullOrWhiteSpace(settingInfo?.DefaultPackageSource))
+                {
+                    throw new Exception("请先完善包设置信息");
+                }
+
+                var tmp = NuGetService.GetAllPackageSources();
+
+                //projModel.PackageInfo = NuGetService.GetPackageData(projModel.LibName,settingInfo.DefaultPackageSource);
+                projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
+                projModel.Author = settingInfo.Authour;
+                projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string> { settingInfo.Authour };
+                projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
+                projModel.Version = (projModel.PackageInfo?.Version?.OriginalVersion).AddVersion();
+
+                var form = new PublishInfoForm();
+                form.Ini(projModel);
+                form.Show();
+
+                PublishInfoForm.PublishEvent = model =>
+                {
+                    var isSuccess = model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
+                    MessageBox.Show(isSuccess ? "推送完成" : "推送失败");
+                    form.Close();
+                };
             }
-
-            var projModel = projInfo.AnalysisProject();
-            if (projModel == null)
+            catch (Exception exception)
             {
-                throw new Exception("您当前选中的项目输出类型不是DLL文件");
+                MessageBox.Show(exception.Message);
             }
-
-            OptionPageGrid settingInfo = NuGetService.GetSettingPage();
-            if (string.IsNullOrWhiteSpace(settingInfo?.DefaultPackageSource))
-            {
-                throw new Exception("请先完善包设置信息");
-            }
-
-            var tmp = NuGetService.GetAllPackageSources();
-
-            projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
-            projModel.Author = settingInfo.Authour;
-            projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string>{ settingInfo.Authour };
-            projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
-            projModel.Version = (projModel.PackageInfo?.Version?.OriginalVersion).AddVersion();
-
-            var form = new PublishInfoForm();
-            form.Ini(projModel);
-            form.Show();
-
-            PublishInfoForm.PublishEvent = model =>
-            {
-                model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
-                MessageBox.Show("推送完成");
-                form.Close();
-            };
         }
 
         private Project GetSelectedProjInfo()
         {
-            if (!((ServiceProvider.GetServiceAsync(typeof(DTE)).Result) is DTE2 dte))
+            if (!((ServiceProvider.GetService(typeof(DTE))) is DTE2 dte))
             {
                 return null;
             }
