@@ -28,13 +28,20 @@ namespace PublishPackageToNuGet
 
         private void btnPublish_Click(object sender, System.EventArgs e)
         {
-            _projModel.Desc = txtDesc.Text;
-            if (string.IsNullOrWhiteSpace(_projModel.Desc))
+            try
             {
-                MessageBox.Show("请输入描述信息");
-                return;
+                _projModel.Desc = txtDesc.Text;
+                if (string.IsNullOrWhiteSpace(_projModel.Desc))
+                {
+                    MessageBox.Show("请输入描述信息");
+                    return;
+                }
+                PublishEvent?.Invoke(_projModel);
             }
-            PublishEvent?.Invoke(_projModel);
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

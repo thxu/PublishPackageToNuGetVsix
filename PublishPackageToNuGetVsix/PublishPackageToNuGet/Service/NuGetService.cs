@@ -196,7 +196,7 @@ namespace PublishPackageToNuGet.Service
 
             if (!File.Exists(dllPath))
             {
-                throw new Exception("未找到DLL文件");
+                throw new Exception("未找到DLL文件, 请先编译项目");
             }
             MyPackageFile dllFile = new MyPackageFile("lib", pkg.LibName + ".dll", dllPath, pkg.NetFrameworkVersion);
             List<IPackageFile> files = new List<IPackageFile>() { dllFile };
