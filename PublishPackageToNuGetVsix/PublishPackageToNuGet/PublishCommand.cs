@@ -128,9 +128,16 @@ namespace PublishPackageToNuGet
 
                 PublishInfoForm.PublishEvent = model =>
                 {
-                    var isSuccess = model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
-                    MessageBox.Show(isSuccess ? "推送完成" : "推送失败");
-                    form.Close();
+                    try
+                    {
+                        var isSuccess = model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
+                        MessageBox.Show(isSuccess ? "推送完成" : "推送失败");
+                        form.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 };
             }
             catch (Exception exception)
