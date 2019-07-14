@@ -3,8 +3,11 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using PublishPackageToNuGet2017.Service;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet2017.Command
@@ -100,6 +103,47 @@ namespace PublishPackageToNuGet2017.Command
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var projInfo = ThreadHelper.JoinableTaskFactory.Run(GetSelectedProjInfoAsync);
+            if (projInfo == null)
+            {
+                throw new Exception("您还未选中项目");
+            }
+
+            var projModel = projInfo.AnalysisProject();
+            if (projModel == null)
+            {
+                throw new Exception("您当前选中的项目输出类型不是DLL文件");
+            }
+        }
+
+
+        /// <summary>
+        /// 获取当前选中的项目
+        /// </summary>
+        /// <returns>项目信息</returns>
+        private async Task<Project> GetSelectedProjInfoAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            if (ServiceProvider != null)
+            {
+                var dte = await ServiceProvider.GetServiceAsync(typeof(DTE)) as DTE2;
+                if (dte == null)
+                {
+                    return null;
+                }
+                var projInfo = (Array)dte.ToolWindows.SolutionExplorer.SelectedItems;
+                foreach (UIHierarchyItem selItem in projInfo)
+                {
+                    if (selItem.Object is Project item)
+                    {
+                        return item;
+                    }
+                }
+                return null;
+            }
+            return null;
         }
     }
 }
