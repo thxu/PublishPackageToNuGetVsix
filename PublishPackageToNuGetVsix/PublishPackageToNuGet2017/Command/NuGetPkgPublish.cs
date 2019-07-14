@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using PublishPackageToNuGet2017.Form;
 using PublishPackageToNuGet2017.Service;
+using PublishPackageToNuGet2017.Setting;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet2017.Command
@@ -91,30 +95,58 @@ namespace PublishPackageToNuGet2017.Command
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "NuGetPkgPublish";
-
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-            ThreadHelper.ThrowIfNotOnUIThread();
-            var projInfo = ThreadHelper.JoinableTaskFactory.Run(GetSelectedProjInfoAsync);
-            if (projInfo == null)
+            try
             {
-                throw new Exception("您还未选中项目");
+                ThreadHelper.ThrowIfNotOnUIThread();
+                var projInfo = ThreadHelper.JoinableTaskFactory.Run(GetSelectedProjInfoAsync);
+                if (projInfo == null)
+                {
+                    throw new Exception("您还未选中项目");
+                }
+
+                var projModel = projInfo.AnalysisProject();
+                if (projModel == null)
+                {
+                    throw new Exception("您当前选中的项目输出类型不是DLL文件");
+                }
+
+                OptionPageGrid settingInfo = NuGetPkgPublishService.GetSettingPage();
+                if (string.IsNullOrWhiteSpace(settingInfo?.DefaultPackageSource))
+                {
+                    throw new Exception("请先完善包设置信息");
+                }
+
+                //var tmp = NuGetPkgPublishService.GetAllPackageSources();
+
+                projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
+                projModel.Author = settingInfo.Authour;
+                projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string> { settingInfo.Authour };
+                projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
+                projModel.Version = (projModel.PackageInfo?.Version?.OriginalVersion).AddVersion();
+
+                var form = new PublishInfoForm();
+                form.Ini(projModel);
+                form.Show();
+
+                PublishInfoForm.PublishEvent = model =>
+                {
+                    try
+                    {
+                        var isSuccess = model.BuildPackage().PushToNugetSer(settingInfo.PublishKey, settingInfo.DefaultPackageSource);
+                        MessageBox.Show(isSuccess ? "推送完成" : "推送失败");
+                        form.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
+                };
+
+                int a = 0;
             }
-
-            var projModel = projInfo.AnalysisProject();
-            if (projModel == null)
+            catch (Exception exception)
             {
-                throw new Exception("您当前选中的项目输出类型不是DLL文件");
+                MessageBox.Show(exception.Message);
             }
         }
 
