@@ -57,6 +57,18 @@
   <ItemGroup>
     <Compile Include="Command\NuGetPkgPublish.cs" />
     <Compile Include="Command\NuGetPkgPublishPackage.cs" />
+    <Compile Include="Form\OurButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Form\OurButton.Designer.cs">
+      <DependentUpon>OurButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PackageDependenciesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PackageDependenciesForm.Designer.cs">
+      <DependentUpon>PackageDependenciesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\PublishInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +78,11 @@
     <Compile Include="Model\MyPackageFile.cs" />
     <Compile Include="Model\ProjModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service\NuGetPkgPublishService.cs" />
     <Compile Include="Service\PackageRepositoryFactory.cs" />
     <Compile Include="Setting\OptionPageGrid.cs">
@@ -92,6 +109,51 @@
     </VSCTCompile>
     <Content Include="Command\Resources\NuGetPkgPublish.png" />
     <Content Include="Command\Resources\NuGetPkgPublishPackage.ico" />
+    <Content Include="Images\Add.png" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\background.PNG" />
+    <Content Include="Images\Books.png" />
+    <Content Include="Images\Book_angleHS.png" />
+    <Content Include="Images\build.png" />
+    <Content Include="Images\Cancel.png" />
+    <Content Include="Images\clear.png" />
+    <Content Include="Images\Close.png" />
+    <Content Include="Images\cog.png" />
+    <Content Include="Images\CopyHS.png" />
+    <Content Include="Images\CutHS.png" />
+    <Content Include="Images\Delete.png" />
+    <Content Include="Images\EditHS.png" />
+    <Content Include="Images\EditSource.png" />
+    <Content Include="Images\Edit_RedoHS.png" />
+    <Content Include="Images\Edit_UndoHS.png" />
+    <Content Include="Images\error.png" />
+    <Content Include="Images\FindHS.png" />
+    <Content Include="Images\folder.png" />
+    <Content Include="Images\FontDialogHS.png" />
+    <Content Include="Images\GoToPrevious.png" />
+    <Content Include="Images\information.png" />
+    <Content Include="Images\Lib.png" />
+    <Content Include="Images\MoveFirstHS.png" />
+    <Content Include="Images\MoveLastHS.png" />
+    <Content Include="Images\MoveNextHS.png" />
+    <Content Include="Images\MovePreviousHS.png" />
+    <Content Include="Images\NewDocumentHS.png" />
+    <Content Include="Images\NewFolderHS.png" />
+    <Content Include="Images\NoteHS.png" />
+    <Content Include="Images\openHS.png" />
+    <Content Include="Images\packageicon.png" />
+    <Content Include="Images\PasteHS.png" />
+    <Content Include="Images\Properties.png" />
+    <Content Include="Images\props.png" />
+    <Content Include="Images\PublishToWebHS.png" />
+    <Content Include="Images\RepeatHS.png" />
+    <Content Include="Images\saveHS.png" />
+    <Content Include="Images\Script.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\source.png" />
+    <Content Include="Images\Tools.png" />
+    <Content Include="Images\Validate.png" />
+    <Content Include="Images\Warning.png" />
     <Content Include="index.html" />
     <Content Include="Microsoft.VisualStudio.ComponentModelHost.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -239,8 +301,18 @@
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\OurButton.resx">
+      <DependentUpon>OurButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PackageDependenciesForm.resx">
+      <DependentUpon>PackageDependenciesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\PublishInfoForm.resx">
       <DependentUpon>PublishInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\PackageSettingControl.resx">
       <DependentUpon>PackageSettingControl.cs</DependentUpon>

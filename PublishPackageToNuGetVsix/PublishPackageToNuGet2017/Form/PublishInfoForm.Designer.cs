@@ -163,6 +163,7 @@
             this.btn_EditDependencies.TabIndex = 48;
             this.btn_EditDependencies.Text = "Edit Dependencies";
             this.btn_EditDependencies.UseVisualStyleBackColor = true;
+            this.btn_EditDependencies.Click += new System.EventHandler(this.btn_EditDependencies_Click);
             // 
             // PublishInfoForm
             // 
