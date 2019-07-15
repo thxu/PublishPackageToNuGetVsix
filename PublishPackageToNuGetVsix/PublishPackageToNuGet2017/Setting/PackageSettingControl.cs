@@ -61,5 +61,10 @@ namespace PublishPackageToNuGet2017.Setting
         {
             OptionPage.PublishKey = txtPublishKey.Text;
         }
+
+        private void btn_Refresh_Click(object sender, EventArgs e)
+        {
+            Initialize();
+        }
     }
 }

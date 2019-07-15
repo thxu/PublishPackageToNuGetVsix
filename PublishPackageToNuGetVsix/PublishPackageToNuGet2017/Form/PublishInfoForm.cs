@@ -50,7 +50,7 @@ namespace PublishPackageToNuGet2017.Form
                         var pkgList = dependencyGroup.Packages.ToList();
                         for (int i = 0; i < pkgList.Count(); i++)
                         {
-                            string txt = $"----{pkgList[i].Id} {pkgList[i].VersionRange.PrettyPrint()}";
+                            string txt = $"    {pkgList[i].Id} {pkgList[i].VersionRange.PrettyPrint()}";
                             Label lbPkg = new Label
                             {
                                 Text = txt,
@@ -87,6 +87,7 @@ namespace PublishPackageToNuGet2017.Form
         private void btn_EditDependencies_Click(object sender, EventArgs e)
         {
             var form = new PackageDependenciesForm();
+            form.Ini(_projModel.PackageInfo.DependencyGroups.ToList());
             form.ShowDialog();
         }
     }

@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Id");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Version");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Operation");
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_ok = new System.Windows.Forms.Button();
             this.groupBox_groups = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listView_GroupList = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPkgVersion = new System.Windows.Forms.TextBox();
+            this.txtPkgId = new System.Windows.Forms.TextBox();
+            this.txtTargetFramework = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.ourButton3 = new PublishPackageToNuGet2017.Form.OurButton();
-            this.ourButton2 = new PublishPackageToNuGet2017.Form.OurButton();
-            this.ourButton1 = new PublishPackageToNuGet2017.Form.OurButton();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.ourButton4 = new PublishPackageToNuGet2017.Form.OurButton();
+            this.btn_AddGroup = new System.Windows.Forms.Button();
+            this.btn_DelGroup = new System.Windows.Forms.Button();
+            this.btn_AddPkg = new System.Windows.Forms.Button();
+            this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
+            this.dg_PkgList = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel1.SuspendLayout();
             this.groupBox_groups.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_PkgList)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -82,9 +83,9 @@
             // 
             // groupBox_groups
             // 
-            this.groupBox_groups.Controls.Add(this.ourButton2);
-            this.groupBox_groups.Controls.Add(this.ourButton1);
-            this.groupBox_groups.Controls.Add(this.listView1);
+            this.groupBox_groups.Controls.Add(this.btn_DelGroup);
+            this.groupBox_groups.Controls.Add(this.btn_AddGroup);
+            this.groupBox_groups.Controls.Add(this.listView_GroupList);
             this.groupBox_groups.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox_groups.Location = new System.Drawing.Point(13, 12);
             this.groupBox_groups.Name = "groupBox_groups";
@@ -93,39 +94,53 @@
             this.groupBox_groups.TabStop = false;
             this.groupBox_groups.Text = "Groups";
             // 
-            // listView1
+            // listView_GroupList
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(6, 41);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(121, 349);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView_GroupList.HideSelection = false;
+            this.listView_GroupList.Location = new System.Drawing.Point(6, 41);
+            this.listView_GroupList.Name = "listView_GroupList";
+            this.listView_GroupList.Size = new System.Drawing.Size(121, 349);
+            this.listView_GroupList.TabIndex = 0;
+            this.listView_GroupList.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.ourButton4);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.ourButton3);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.dg_PkgList);
+            this.groupBox1.Controls.Add(this.btn_OpenOnLinePkgListForm);
+            this.groupBox1.Controls.Add(this.btn_AddPkg);
+            this.groupBox1.Controls.Add(this.txtPkgVersion);
+            this.groupBox1.Controls.Add(this.txtPkgId);
+            this.groupBox1.Controls.Add(this.txtTargetFramework);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.listView2);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(153, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(645, 396);
+            this.groupBox1.Size = new System.Drawing.Size(559, 396);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Group details";
             // 
-            // textBox1
+            // txtPkgVersion
             // 
-            this.textBox1.Location = new System.Drawing.Point(139, 14);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(415, 21);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "如：netstandard2.0，net45等";
+            this.txtPkgVersion.Location = new System.Drawing.Point(239, 367);
+            this.txtPkgVersion.Name = "txtPkgVersion";
+            this.txtPkgVersion.Size = new System.Drawing.Size(279, 21);
+            this.txtPkgVersion.TabIndex = 13;
+            // 
+            // txtPkgId
+            // 
+            this.txtPkgId.Location = new System.Drawing.Point(50, 367);
+            this.txtPkgId.Name = "txtPkgId";
+            this.txtPkgId.Size = new System.Drawing.Size(181, 21);
+            this.txtPkgId.TabIndex = 12;
+            // 
+            // txtTargetFramework
+            // 
+            this.txtTargetFramework.Location = new System.Drawing.Point(139, 14);
+            this.txtTargetFramework.Name = "txtTargetFramework";
+            this.txtTargetFramework.Size = new System.Drawing.Size(415, 21);
+            this.txtTargetFramework.TabIndex = 8;
+            this.txtTargetFramework.Text = "如：netstandard2.0，net45等";
             // 
             // label2
             // 
@@ -137,105 +152,88 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Target framework";
             // 
-            // listView2
+            // btn_AddGroup
             // 
-            this.listView2.HideSelection = false;
-            this.listView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
-            this.listView2.Location = new System.Drawing.Point(16, 41);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(538, 318);
-            this.listView2.TabIndex = 6;
-            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.btn_AddGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
+            this.btn_AddGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_AddGroup.Location = new System.Drawing.Point(70, 14);
+            this.btn_AddGroup.Name = "btn_AddGroup";
+            this.btn_AddGroup.Size = new System.Drawing.Size(26, 26);
+            this.btn_AddGroup.TabIndex = 2;
+            this.btn_AddGroup.UseVisualStyleBackColor = true;
             // 
-            // ourButton3
+            // btn_DelGroup
             // 
-            this.ourButton3.CheckState = true;
-            this.ourButton3.ColorMouseDown = System.Drawing.Color.White;
-            this.ourButton3.ColorMouseIn = System.Drawing.Color.White;
-            this.ourButton3.Exclusion = true;
-            this.ourButton3.Image = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
-            this.ourButton3.IntervalBetweenTextAndBorder = 2;
-            this.ourButton3.IntervalBetweenTextAndImage = 2;
-            this.ourButton3.Location = new System.Drawing.Point(8, 367);
-            this.ourButton3.Name = "ourButton3";
-            this.ourButton3.RoundCorner = false;
-            this.ourButton3.Size = new System.Drawing.Size(30, 23);
-            this.ourButton3.TabIndex = 11;
-            this.ourButton3.TextPosition = PublishPackageToNuGet2017.Form.eTextPosition.Bottom;
-            this.ourButton3.WithArrow = true;
-            this.ourButton3.WithBorder = true;
+            this.btn_DelGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Delete;
+            this.btn_DelGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_DelGroup.Location = new System.Drawing.Point(101, 14);
+            this.btn_DelGroup.Name = "btn_DelGroup";
+            this.btn_DelGroup.Size = new System.Drawing.Size(26, 26);
+            this.btn_DelGroup.TabIndex = 3;
+            this.btn_DelGroup.UseVisualStyleBackColor = true;
             // 
-            // ourButton2
+            // btn_AddPkg
             // 
-            this.ourButton2.CheckState = true;
-            this.ourButton2.ColorMouseDown = System.Drawing.Color.White;
-            this.ourButton2.ColorMouseIn = System.Drawing.Color.White;
-            this.ourButton2.Exclusion = true;
-            this.ourButton2.Image = global::PublishPackageToNuGet2017.Properties.Resources.Delete;
-            this.ourButton2.IntervalBetweenTextAndBorder = 2;
-            this.ourButton2.IntervalBetweenTextAndImage = 2;
-            this.ourButton2.Location = new System.Drawing.Point(97, 14);
-            this.ourButton2.Name = "ourButton2";
-            this.ourButton2.RoundCorner = false;
-            this.ourButton2.Size = new System.Drawing.Size(30, 23);
-            this.ourButton2.TabIndex = 10;
-            this.ourButton2.TextPosition = PublishPackageToNuGet2017.Form.eTextPosition.Bottom;
-            this.ourButton2.WithArrow = true;
-            this.ourButton2.WithBorder = true;
+            this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
+            this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_AddPkg.Location = new System.Drawing.Point(526, 364);
+            this.btn_AddPkg.Name = "btn_AddPkg";
+            this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
+            this.btn_AddPkg.TabIndex = 4;
+            this.btn_AddPkg.UseVisualStyleBackColor = true;
             // 
-            // ourButton1
+            // btn_OpenOnLinePkgListForm
             // 
-            this.ourButton1.CheckState = true;
-            this.ourButton1.ColorMouseDown = System.Drawing.Color.White;
-            this.ourButton1.ColorMouseIn = System.Drawing.Color.White;
-            this.ourButton1.Exclusion = true;
-            this.ourButton1.Image = global::PublishPackageToNuGet2017.Properties.Resources.Add;
-            this.ourButton1.IntervalBetweenTextAndBorder = 2;
-            this.ourButton1.IntervalBetweenTextAndImage = 2;
-            this.ourButton1.Location = new System.Drawing.Point(61, 14);
-            this.ourButton1.Name = "ourButton1";
-            this.ourButton1.RoundCorner = false;
-            this.ourButton1.Size = new System.Drawing.Size(30, 23);
-            this.ourButton1.TabIndex = 9;
-            this.ourButton1.TextPosition = PublishPackageToNuGet2017.Form.eTextPosition.Bottom;
-            this.ourButton1.WithArrow = true;
-            this.ourButton1.WithBorder = true;
+            this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
+            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
+            this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
+            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(26, 26);
+            this.btn_OpenOnLinePkgListForm.TabIndex = 4;
+            this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // dg_PkgList
             // 
-            this.textBox2.Location = new System.Drawing.Point(52, 369);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(181, 21);
-            this.textBox2.TabIndex = 12;
+            this.dg_PkgList.AllowUserToAddRows = false;
+            this.dg_PkgList.AllowUserToDeleteRows = false;
+            this.dg_PkgList.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dg_PkgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Version,
+            this.Op});
+            this.dg_PkgList.Location = new System.Drawing.Point(18, 41);
+            this.dg_PkgList.Name = "dg_PkgList";
+            this.dg_PkgList.ReadOnly = true;
+            this.dg_PkgList.RowHeadersVisible = false;
+            this.dg_PkgList.RowTemplate.Height = 23;
+            this.dg_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dg_PkgList.Size = new System.Drawing.Size(536, 317);
+            this.dg_PkgList.TabIndex = 14;
             // 
-            // textBox3
+            // Id
             // 
-            this.textBox3.Location = new System.Drawing.Point(239, 369);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(279, 21);
-            this.textBox3.TabIndex = 13;
+            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
             // 
-            // ourButton4
+            // Version
             // 
-            this.ourButton4.CheckState = true;
-            this.ourButton4.ColorMouseDown = System.Drawing.Color.White;
-            this.ourButton4.ColorMouseIn = System.Drawing.Color.White;
-            this.ourButton4.Exclusion = true;
-            this.ourButton4.Image = global::PublishPackageToNuGet2017.Properties.Resources.Add;
-            this.ourButton4.IntervalBetweenTextAndBorder = 2;
-            this.ourButton4.IntervalBetweenTextAndImage = 2;
-            this.ourButton4.Location = new System.Drawing.Point(524, 367);
-            this.ourButton4.Name = "ourButton4";
-            this.ourButton4.RoundCorner = false;
-            this.ourButton4.Size = new System.Drawing.Size(30, 23);
-            this.ourButton4.TabIndex = 11;
-            this.ourButton4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ourButton4.TextPosition = PublishPackageToNuGet2017.Form.eTextPosition.Bottom;
-            this.ourButton4.WithArrow = true;
-            this.ourButton4.WithBorder = true;
+            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Version.HeaderText = "Version";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
+            this.Version.Width = 150;
+            // 
+            // Op
+            // 
+            this.Op.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Op.HeaderText = "";
+            this.Op.Name = "Op";
+            this.Op.ReadOnly = true;
+            this.Op.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Op.Width = 90;
             // 
             // PackageDependenciesForm
             // 
@@ -252,6 +250,7 @@
             this.groupBox_groups.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_PkgList)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -263,15 +262,18 @@
         private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.GroupBox groupBox_groups;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtTargetFramework;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.ListView listView1;
-        private OurButton ourButton1;
-        private OurButton ourButton2;
-        private OurButton ourButton3;
-        private System.Windows.Forms.TextBox textBox2;
-        private OurButton ourButton4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.ListView listView_GroupList;
+        private System.Windows.Forms.TextBox txtPkgId;
+        private System.Windows.Forms.TextBox txtPkgVersion;
+        private System.Windows.Forms.Button btn_DelGroup;
+        private System.Windows.Forms.Button btn_AddGroup;
+        private System.Windows.Forms.Button btn_OpenOnLinePkgListForm;
+        private System.Windows.Forms.Button btn_AddPkg;
+        private System.Windows.Forms.DataGridView dg_PkgList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Version;
+        private System.Windows.Forms.DataGridViewLinkColumn Op;
     }
 }

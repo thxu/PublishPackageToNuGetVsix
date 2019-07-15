@@ -34,6 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn_Refresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbPackageSource
@@ -89,10 +90,21 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Authour:";
             // 
+            // btn_Refresh
+            // 
+            this.btn_Refresh.Location = new System.Drawing.Point(343, 66);
+            this.btn_Refresh.Name = "btn_Refresh";
+            this.btn_Refresh.Size = new System.Drawing.Size(62, 23);
+            this.btn_Refresh.TabIndex = 24;
+            this.btn_Refresh.Text = "Refresh";
+            this.btn_Refresh.UseVisualStyleBackColor = true;
+            this.btn_Refresh.Click += new System.EventHandler(this.btn_Refresh_Click);
+            // 
             // PackageSettingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btn_Refresh);
             this.Controls.Add(this.cbPackageSource);
             this.Controls.Add(this.txtPublishKey);
             this.Controls.Add(this.txtAuthour);
@@ -100,7 +112,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "PackageSettingControl";
-            this.Size = new System.Drawing.Size(367, 150);
+            this.Size = new System.Drawing.Size(414, 150);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,5 +126,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn_Refresh;
     }
 }
