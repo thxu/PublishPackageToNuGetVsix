@@ -178,6 +178,10 @@ namespace PublishPackageToNuGet2017.Service
         {
             try
             {
+                if (skip <= 0)
+                {
+                    skip = 0;
+                }
                 var repository = PackageRepositoryFactory.CreateRepository(packageSourceUrl);
                 IEnumerable<IPackageSearchMetadata> simpleDataList = null;
                 var rawPackageSearchResouce = ThreadHelper.JoinableTaskFactory.Run((() => repository.GetResourceAsync<RawSearchResourceV3>(CancellationToken.None)));
@@ -199,7 +203,8 @@ namespace PublishPackageToNuGet2017.Service
                     {
                         Desc = n.Description,
                         Id = n.Identity.Id,
-                        Version = n.Identity.Version.OriginalVersion
+                        Version = n.Identity.Version.OriginalVersion,
+                        Author = n.Authors,
                     }).ToList();
                     return res;
                 }

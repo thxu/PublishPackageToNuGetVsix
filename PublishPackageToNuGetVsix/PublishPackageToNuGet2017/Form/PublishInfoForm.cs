@@ -28,7 +28,13 @@ namespace PublishPackageToNuGet2017.Form
             txtOwners.Text = string.Join(",", _projModel.Owners);
             txtDesc.Text = _projModel.Desc;
 
+            refreshDepency();
+        }
+
+        private void refreshDepency()
+        {
             int posY = 0;
+            panel_PkgDependencyGroup.Controls.Clear();
             if (_projModel.PackageInfo?.DependencyGroups != null && _projModel.PackageInfo.DependencyGroups.Any())
             {
                 foreach (PackageDependencyGroup dependencyGroup in _projModel.PackageInfo.DependencyGroups)
@@ -87,7 +93,12 @@ namespace PublishPackageToNuGet2017.Form
         private void btn_EditDependencies_Click(object sender, EventArgs e)
         {
             var form = new PackageDependenciesForm();
-            form.Ini(_projModel.PackageInfo.DependencyGroups.ToList());
+            form.Ini(_projModel.PackageInfo.DependencyGroups.ToList(), _projModel.PackageInfo.Id);
+            PackageDependenciesForm.SaveDependencyEvent += list =>
+            {
+                _projModel.PackageInfo.DependencyGroups = list;
+                refreshDepency();
+            };
             form.ShowDialog();
         }
     }

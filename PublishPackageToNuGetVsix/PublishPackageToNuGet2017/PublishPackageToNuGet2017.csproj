@@ -308,6 +308,9 @@
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\OnLinePkgListForm.resx">
+      <DependentUpon>OnLinePkgListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\OurButton.resx">
       <DependentUpon>OurButton.cs</DependentUpon>
     </EmbeddedResource>

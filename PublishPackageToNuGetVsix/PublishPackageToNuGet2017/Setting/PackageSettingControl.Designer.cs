@@ -41,32 +41,32 @@
             // 
             this.cbPackageSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPackageSource.FormattingEnabled = true;
-            this.cbPackageSource.Location = new System.Drawing.Point(131, 66);
+            this.cbPackageSource.Location = new System.Drawing.Point(98, 60);
             this.cbPackageSource.Name = "cbPackageSource";
-            this.cbPackageSource.Size = new System.Drawing.Size(205, 20);
+            this.cbPackageSource.Size = new System.Drawing.Size(199, 20);
             this.cbPackageSource.TabIndex = 23;
             this.cbPackageSource.SelectedIndexChanged += new System.EventHandler(this.SavePackageSource);
             // 
             // txtPublishKey
             // 
-            this.txtPublishKey.Location = new System.Drawing.Point(131, 101);
+            this.txtPublishKey.Location = new System.Drawing.Point(98, 95);
             this.txtPublishKey.Name = "txtPublishKey";
-            this.txtPublishKey.Size = new System.Drawing.Size(205, 21);
+            this.txtPublishKey.Size = new System.Drawing.Size(199, 21);
             this.txtPublishKey.TabIndex = 22;
             this.txtPublishKey.TextChanged += new System.EventHandler(this.SavePublishKey);
             // 
             // txtAuthour
             // 
-            this.txtAuthour.Location = new System.Drawing.Point(131, 32);
+            this.txtAuthour.Location = new System.Drawing.Point(98, 26);
             this.txtAuthour.Name = "txtAuthour";
-            this.txtAuthour.Size = new System.Drawing.Size(205, 21);
+            this.txtAuthour.Size = new System.Drawing.Size(199, 21);
             this.txtAuthour.TabIndex = 21;
             this.txtAuthour.TextChanged += new System.EventHandler(this.SaveAuthour);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(36, 104);
+            this.label3.Location = new System.Drawing.Point(3, 98);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 12);
             this.label3.TabIndex = 20;
@@ -75,7 +75,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 69);
+            this.label2.Location = new System.Drawing.Point(3, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 19;
@@ -84,7 +84,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 35);
+            this.label1.Location = new System.Drawing.Point(3, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 18;
@@ -92,9 +92,9 @@
             // 
             // btn_Refresh
             // 
-            this.btn_Refresh.Location = new System.Drawing.Point(343, 66);
+            this.btn_Refresh.Location = new System.Drawing.Point(303, 59);
             this.btn_Refresh.Name = "btn_Refresh";
-            this.btn_Refresh.Size = new System.Drawing.Size(62, 23);
+            this.btn_Refresh.Size = new System.Drawing.Size(62, 20);
             this.btn_Refresh.TabIndex = 24;
             this.btn_Refresh.Text = "Refresh";
             this.btn_Refresh.UseVisualStyleBackColor = true;
@@ -112,7 +112,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "PackageSettingControl";
-            this.Size = new System.Drawing.Size(414, 150);
+            this.Size = new System.Drawing.Size(444, 150);
             this.ResumeLayout(false);
             this.PerformLayout();
 

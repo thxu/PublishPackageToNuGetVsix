@@ -71,6 +71,7 @@
             this.btn_Cancel.TabIndex = 1;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
             // btn_ok
             // 
@@ -80,6 +81,7 @@
             this.btn_ok.TabIndex = 0;
             this.btn_ok.Text = "OK";
             this.btn_ok.UseVisualStyleBackColor = true;
+            this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
             // groupBox_groups
             // 
@@ -118,13 +120,16 @@
             // 
             // listView_GroupList
             // 
+            this.listView_GroupList.GridLines = true;
             this.listView_GroupList.HideSelection = false;
             this.listView_GroupList.Location = new System.Drawing.Point(6, 41);
+            this.listView_GroupList.MultiSelect = false;
             this.listView_GroupList.Name = "listView_GroupList";
             this.listView_GroupList.Size = new System.Drawing.Size(121, 349);
             this.listView_GroupList.TabIndex = 0;
             this.listView_GroupList.UseCompatibleStateImageBehavior = false;
             this.listView_GroupList.SelectedIndexChanged += new System.EventHandler(this.listView_GroupList_SelectedIndexChanged);
+            this.listView_GroupList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listView_GroupList_MouseUp);
             // 
             // groupBox1
             // 

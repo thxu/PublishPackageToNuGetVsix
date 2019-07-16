@@ -7,5 +7,7 @@
         public string Version { get; set; }
 
         public string Desc { get; set; }
+
+        public string Author { get; set; }
     }
 }

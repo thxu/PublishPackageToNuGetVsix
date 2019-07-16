@@ -31,6 +31,7 @@ namespace PublishPackageToNuGet2017.Setting
 
             if (OptionPage.AllPackageSource != null && OptionPage.AllPackageSource.Any())
             {
+                cbPackageSource.Items.Clear();
                 foreach (var sc in OptionPage.AllPackageSource)
                 {
                     cbPackageSource.Items.Add(sc);
