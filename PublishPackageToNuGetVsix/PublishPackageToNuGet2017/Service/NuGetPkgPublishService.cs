@@ -1,23 +1,23 @@
 ﻿using EnvDTE;
-using Microsoft.VisualStudio.Shell;
-using NuGet.Packaging;
-using PublishPackageToNuGet2017.Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ComponentModelHost;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using NuGet.Common;
+using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 using NuGet.VisualStudio;
 using PublishPackageToNuGet2017.Command;
+using PublishPackageToNuGet2017.Model;
 using PublishPackageToNuGet2017.Setting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
 namespace PublishPackageToNuGet2017.Service
@@ -170,6 +170,43 @@ namespace PublishPackageToNuGet2017.Service
             }
             catch (Exception e)
             {
+            }
+            return null;
+        }
+
+        public static List<SimplePkgView> GetPkgList(this string packageSourceUrl, string pkgName, int skip, int take = 10)
+        {
+            try
+            {
+                var repository = PackageRepositoryFactory.CreateRepository(packageSourceUrl);
+                IEnumerable<IPackageSearchMetadata> simpleDataList = null;
+                var rawPackageSearchResouce = ThreadHelper.JoinableTaskFactory.Run((() => repository.GetResourceAsync<RawSearchResourceV3>(CancellationToken.None)));
+                if (rawPackageSearchResouce != null)
+                {
+                    var json = ThreadHelper.JoinableTaskFactory.Run(() => rawPackageSearchResouce.Search(pkgName, new SearchFilter(true), skip, take, NullLogger.Instance, CancellationToken.None));
+                    simpleDataList = json.Select(s => s.FromJToken<PackageSearchMetadata>());
+                }
+
+                if (simpleDataList == null || !simpleDataList.Any())
+                {
+                    var packageSearchResouce = ThreadHelper.JoinableTaskFactory.Run(() => repository.GetResourceAsync<PackageSearchResource>(CancellationToken.None));
+                    simpleDataList = ThreadHelper.JoinableTaskFactory.Run(() => packageSearchResouce.SearchAsync(pkgName, new SearchFilter(true), skip, take, NullLogger.Instance, CancellationToken.None));
+                }
+
+                if (simpleDataList != null && simpleDataList.Any())
+                {
+                    var res = simpleDataList.Select(n => new SimplePkgView
+                    {
+                        Desc = n.Description,
+                        Id = n.Identity.Id,
+                        Version = n.Identity.Version.OriginalVersion
+                    }).ToList();
+                    return res;
+                }
+            }
+            catch (Exception e)
+            {
+
             }
             return null;
         }

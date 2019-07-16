@@ -32,20 +32,20 @@
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_ok = new System.Windows.Forms.Button();
             this.groupBox_groups = new System.Windows.Forms.GroupBox();
+            this.btn_DelGroup = new System.Windows.Forms.Button();
+            this.btn_AddGroup = new System.Windows.Forms.Button();
             this.listView_GroupList = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtPkgVersion = new System.Windows.Forms.TextBox();
-            this.txtPkgId = new System.Windows.Forms.TextBox();
-            this.txtTargetFramework = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btn_AddGroup = new System.Windows.Forms.Button();
-            this.btn_DelGroup = new System.Windows.Forms.Button();
-            this.btn_AddPkg = new System.Windows.Forms.Button();
-            this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
             this.dg_PkgList = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
+            this.btn_AddPkg = new System.Windows.Forms.Button();
+            this.txtPkgVersion = new System.Windows.Forms.TextBox();
+            this.txtPkgId = new System.Windows.Forms.TextBox();
+            this.txtTargetFramework = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox_groups.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -94,6 +94,28 @@
             this.groupBox_groups.TabStop = false;
             this.groupBox_groups.Text = "Groups";
             // 
+            // btn_DelGroup
+            // 
+            this.btn_DelGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Delete;
+            this.btn_DelGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_DelGroup.Location = new System.Drawing.Point(101, 14);
+            this.btn_DelGroup.Name = "btn_DelGroup";
+            this.btn_DelGroup.Size = new System.Drawing.Size(26, 26);
+            this.btn_DelGroup.TabIndex = 3;
+            this.btn_DelGroup.UseVisualStyleBackColor = true;
+            this.btn_DelGroup.Click += new System.EventHandler(this.btn_DelGroup_Click);
+            // 
+            // btn_AddGroup
+            // 
+            this.btn_AddGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
+            this.btn_AddGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_AddGroup.Location = new System.Drawing.Point(70, 14);
+            this.btn_AddGroup.Name = "btn_AddGroup";
+            this.btn_AddGroup.Size = new System.Drawing.Size(26, 26);
+            this.btn_AddGroup.TabIndex = 2;
+            this.btn_AddGroup.UseVisualStyleBackColor = true;
+            this.btn_AddGroup.Click += new System.EventHandler(this.btn_AddGroup_Click);
+            // 
             // listView_GroupList
             // 
             this.listView_GroupList.HideSelection = false;
@@ -102,6 +124,7 @@
             this.listView_GroupList.Size = new System.Drawing.Size(121, 349);
             this.listView_GroupList.TabIndex = 0;
             this.listView_GroupList.UseCompatibleStateImageBehavior = false;
+            this.listView_GroupList.SelectedIndexChanged += new System.EventHandler(this.listView_GroupList_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -119,6 +142,72 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Group details";
+            // 
+            // dg_PkgList
+            // 
+            this.dg_PkgList.AllowUserToAddRows = false;
+            this.dg_PkgList.AllowUserToDeleteRows = false;
+            this.dg_PkgList.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dg_PkgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Version,
+            this.Op});
+            this.dg_PkgList.Location = new System.Drawing.Point(18, 41);
+            this.dg_PkgList.Name = "dg_PkgList";
+            this.dg_PkgList.ReadOnly = true;
+            this.dg_PkgList.RowHeadersVisible = false;
+            this.dg_PkgList.RowTemplate.Height = 23;
+            this.dg_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dg_PkgList.Size = new System.Drawing.Size(536, 317);
+            this.dg_PkgList.TabIndex = 14;
+            this.dg_PkgList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_PkgList_CellContentClick);
+            // 
+            // Id
+            // 
+            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            // 
+            // Version
+            // 
+            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Version.HeaderText = "Version";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
+            this.Version.Width = 150;
+            // 
+            // Op
+            // 
+            this.Op.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Op.HeaderText = "";
+            this.Op.Name = "Op";
+            this.Op.ReadOnly = true;
+            this.Op.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Op.Width = 90;
+            // 
+            // btn_OpenOnLinePkgListForm
+            // 
+            this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
+            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
+            this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
+            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(26, 26);
+            this.btn_OpenOnLinePkgListForm.TabIndex = 4;
+            this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
+            this.btn_OpenOnLinePkgListForm.Click += new System.EventHandler(this.btn_OpenOnLinePkgListForm_Click);
+            // 
+            // btn_AddPkg
+            // 
+            this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
+            this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_AddPkg.Location = new System.Drawing.Point(526, 364);
+            this.btn_AddPkg.Name = "btn_AddPkg";
+            this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
+            this.btn_AddPkg.TabIndex = 4;
+            this.btn_AddPkg.UseVisualStyleBackColor = true;
+            this.btn_AddPkg.Click += new System.EventHandler(this.btn_AddPkg_Click);
             // 
             // txtPkgVersion
             // 
@@ -151,89 +240,6 @@
             this.label2.Size = new System.Drawing.Size(117, 12);
             this.label2.TabIndex = 7;
             this.label2.Text = "Target framework";
-            // 
-            // btn_AddGroup
-            // 
-            this.btn_AddGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
-            this.btn_AddGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_AddGroup.Location = new System.Drawing.Point(70, 14);
-            this.btn_AddGroup.Name = "btn_AddGroup";
-            this.btn_AddGroup.Size = new System.Drawing.Size(26, 26);
-            this.btn_AddGroup.TabIndex = 2;
-            this.btn_AddGroup.UseVisualStyleBackColor = true;
-            // 
-            // btn_DelGroup
-            // 
-            this.btn_DelGroup.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Delete;
-            this.btn_DelGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_DelGroup.Location = new System.Drawing.Point(101, 14);
-            this.btn_DelGroup.Name = "btn_DelGroup";
-            this.btn_DelGroup.Size = new System.Drawing.Size(26, 26);
-            this.btn_DelGroup.TabIndex = 3;
-            this.btn_DelGroup.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddPkg
-            // 
-            this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
-            this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_AddPkg.Location = new System.Drawing.Point(526, 364);
-            this.btn_AddPkg.Name = "btn_AddPkg";
-            this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
-            this.btn_AddPkg.TabIndex = 4;
-            this.btn_AddPkg.UseVisualStyleBackColor = true;
-            // 
-            // btn_OpenOnLinePkgListForm
-            // 
-            this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
-            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
-            this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
-            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(26, 26);
-            this.btn_OpenOnLinePkgListForm.TabIndex = 4;
-            this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
-            // 
-            // dg_PkgList
-            // 
-            this.dg_PkgList.AllowUserToAddRows = false;
-            this.dg_PkgList.AllowUserToDeleteRows = false;
-            this.dg_PkgList.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dg_PkgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Version,
-            this.Op});
-            this.dg_PkgList.Location = new System.Drawing.Point(18, 41);
-            this.dg_PkgList.Name = "dg_PkgList";
-            this.dg_PkgList.ReadOnly = true;
-            this.dg_PkgList.RowHeadersVisible = false;
-            this.dg_PkgList.RowTemplate.Height = 23;
-            this.dg_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dg_PkgList.Size = new System.Drawing.Size(536, 317);
-            this.dg_PkgList.TabIndex = 14;
-            // 
-            // Id
-            // 
-            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            // 
-            // Version
-            // 
-            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Version.HeaderText = "Version";
-            this.Version.Name = "Version";
-            this.Version.ReadOnly = true;
-            this.Version.Width = 150;
-            // 
-            // Op
-            // 
-            this.Op.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Op.HeaderText = "";
-            this.Op.Name = "Op";
-            this.Op.ReadOnly = true;
-            this.Op.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Op.Width = 90;
             // 
             // PackageDependenciesForm
             // 
