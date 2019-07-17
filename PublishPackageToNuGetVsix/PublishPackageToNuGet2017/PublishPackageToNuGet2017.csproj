@@ -63,12 +63,6 @@
     <Compile Include="Form\OnLinePkgListForm.Designer.cs">
       <DependentUpon>OnLinePkgListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\OurButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Form\OurButton.Designer.cs">
-      <DependentUpon>OurButton.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form\PackageDependenciesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +107,7 @@
   <ItemGroup>
     <VSCTCompile Include="Command\NuGetPkgPublishPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
     </VSCTCompile>
     <Content Include="Command\Resources\NuGetPkgPublish.png" />
     <Content Include="Command\Resources\NuGetPkgPublishPackage.ico" />
@@ -310,9 +305,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\OnLinePkgListForm.resx">
       <DependentUpon>OnLinePkgListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\OurButton.resx">
-      <DependentUpon>OurButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\PackageDependenciesForm.resx">
       <DependentUpon>PackageDependenciesForm.cs</DependentUpon>

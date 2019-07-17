@@ -6,20 +6,20 @@ using System.Windows.Forms;
 
 namespace PublishPackageToNuGet2017.Setting
 {
-    [Guid("fdc69487-0b5a-4fba-8ee2-526d24db9495")]
+    //[Guid("fdc69487-0b5a-4fba-8ee2-526d24db9495")]
     public class OptionPageGrid : DialogPage
     {
-        [Category("NuGetPackageSetting")]
+        [Category("NugetPackageSetting")]
         [DisplayName("Authour")]
         [Description("Authour")]
         public string Authour { get; set; } = "";
 
-        [Category("NuGetPackageSetting")]
+        [Category("NugetPackageSetting")]
         [DisplayName("PublishKey")]
         [Description("PublishKey Or PAT")]
         public string PublishKey { get; set; } = "";
 
-        [Category("NuGetPackageSetting")]
+        [Category("NugetPackageSetting")]
         [DisplayName("PackageSource")]
         [Description("PackageSource, The Publish Url")]
         public string DefaultPackageSource { get; set; } = "https://api.nuget.org/v3/index.json";

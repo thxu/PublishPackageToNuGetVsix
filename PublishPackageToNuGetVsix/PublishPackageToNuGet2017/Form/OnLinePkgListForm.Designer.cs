@@ -35,11 +35,11 @@
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_ok = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgv_PkgList = new System.Windows.Forms.DataGridView();
-            this.btn_MoveToFirst = new System.Windows.Forms.Button();
-            this.btn_MoveNext = new System.Windows.Forms.Button();
-            this.btn_MovePre = new System.Windows.Forms.Button();
             this.lb_CurrPage = new System.Windows.Forms.Label();
+            this.btn_MovePre = new System.Windows.Forms.Button();
+            this.btn_MoveNext = new System.Windows.Forms.Button();
+            this.btn_MoveToFirst = new System.Windows.Forms.Button();
+            this.dgv_PkgList = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,7 +85,7 @@
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.Location = new System.Drawing.Point(603, 9);
+            this.btn_Cancel.Location = new System.Drawing.Point(691, 9);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(95, 23);
             this.btn_Cancel.TabIndex = 1;
@@ -95,7 +95,7 @@
             // 
             // btn_ok
             // 
-            this.btn_ok.Location = new System.Drawing.Point(478, 9);
+            this.btn_ok.Location = new System.Drawing.Point(566, 9);
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(95, 23);
             this.btn_ok.TabIndex = 0;
@@ -118,6 +118,48 @@
             this.panel1.Size = new System.Drawing.Size(800, 41);
             this.panel1.TabIndex = 28;
             // 
+            // lb_CurrPage
+            // 
+            this.lb_CurrPage.AutoSize = true;
+            this.lb_CurrPage.Location = new System.Drawing.Point(77, 14);
+            this.lb_CurrPage.Name = "lb_CurrPage";
+            this.lb_CurrPage.Size = new System.Drawing.Size(11, 12);
+            this.lb_CurrPage.TabIndex = 5;
+            this.lb_CurrPage.Text = "0";
+            // 
+            // btn_MovePre
+            // 
+            this.btn_MovePre.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MovePreviousHS;
+            this.btn_MovePre.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_MovePre.Location = new System.Drawing.Point(45, 7);
+            this.btn_MovePre.Name = "btn_MovePre";
+            this.btn_MovePre.Size = new System.Drawing.Size(26, 26);
+            this.btn_MovePre.TabIndex = 4;
+            this.btn_MovePre.UseVisualStyleBackColor = true;
+            this.btn_MovePre.Click += new System.EventHandler(this.btn_MovePre_Click);
+            // 
+            // btn_MoveNext
+            // 
+            this.btn_MoveNext.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MoveNextHS;
+            this.btn_MoveNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_MoveNext.Location = new System.Drawing.Point(105, 7);
+            this.btn_MoveNext.Name = "btn_MoveNext";
+            this.btn_MoveNext.Size = new System.Drawing.Size(26, 26);
+            this.btn_MoveNext.TabIndex = 3;
+            this.btn_MoveNext.UseVisualStyleBackColor = true;
+            this.btn_MoveNext.Click += new System.EventHandler(this.btn_MoveNext_Click);
+            // 
+            // btn_MoveToFirst
+            // 
+            this.btn_MoveToFirst.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MoveFirstHS;
+            this.btn_MoveToFirst.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_MoveToFirst.Location = new System.Drawing.Point(13, 7);
+            this.btn_MoveToFirst.Name = "btn_MoveToFirst";
+            this.btn_MoveToFirst.Size = new System.Drawing.Size(26, 26);
+            this.btn_MoveToFirst.TabIndex = 2;
+            this.btn_MoveToFirst.UseVisualStyleBackColor = true;
+            this.btn_MoveToFirst.Click += new System.EventHandler(this.btn_MoveToFirst_Click);
+            // 
             // dgv_PkgList
             // 
             this.dgv_PkgList.AllowUserToAddRows = false;
@@ -138,48 +180,6 @@
             this.dgv_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_PkgList.Size = new System.Drawing.Size(800, 375);
             this.dgv_PkgList.TabIndex = 29;
-            // 
-            // btn_MoveToFirst
-            // 
-            this.btn_MoveToFirst.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MoveFirstHS;
-            this.btn_MoveToFirst.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_MoveToFirst.Location = new System.Drawing.Point(13, 7);
-            this.btn_MoveToFirst.Name = "btn_MoveToFirst";
-            this.btn_MoveToFirst.Size = new System.Drawing.Size(26, 26);
-            this.btn_MoveToFirst.TabIndex = 2;
-            this.btn_MoveToFirst.UseVisualStyleBackColor = true;
-            this.btn_MoveToFirst.Click += new System.EventHandler(this.btn_MoveToFirst_Click);
-            // 
-            // btn_MoveNext
-            // 
-            this.btn_MoveNext.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MoveNextHS;
-            this.btn_MoveNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_MoveNext.Location = new System.Drawing.Point(105, 7);
-            this.btn_MoveNext.Name = "btn_MoveNext";
-            this.btn_MoveNext.Size = new System.Drawing.Size(26, 26);
-            this.btn_MoveNext.TabIndex = 3;
-            this.btn_MoveNext.UseVisualStyleBackColor = true;
-            this.btn_MoveNext.Click += new System.EventHandler(this.btn_MoveNext_Click);
-            // 
-            // btn_MovePre
-            // 
-            this.btn_MovePre.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.MovePreviousHS;
-            this.btn_MovePre.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_MovePre.Location = new System.Drawing.Point(45, 7);
-            this.btn_MovePre.Name = "btn_MovePre";
-            this.btn_MovePre.Size = new System.Drawing.Size(26, 26);
-            this.btn_MovePre.TabIndex = 4;
-            this.btn_MovePre.UseVisualStyleBackColor = true;
-            this.btn_MovePre.Click += new System.EventHandler(this.btn_MovePre_Click);
-            // 
-            // lb_CurrPage
-            // 
-            this.lb_CurrPage.AutoSize = true;
-            this.lb_CurrPage.Location = new System.Drawing.Point(77, 14);
-            this.lb_CurrPage.Name = "lb_CurrPage";
-            this.lb_CurrPage.Size = new System.Drawing.Size(11, 12);
-            this.lb_CurrPage.TabIndex = 5;
-            this.lb_CurrPage.Text = "0";
             // 
             // Column1
             // 

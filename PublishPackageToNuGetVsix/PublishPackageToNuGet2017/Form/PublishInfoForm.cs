@@ -1,6 +1,7 @@
 ﻿using NuGet.Packaging;
 using PublishPackageToNuGet2017.Model;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -93,7 +94,7 @@ namespace PublishPackageToNuGet2017.Form
         private void btn_EditDependencies_Click(object sender, EventArgs e)
         {
             var form = new PackageDependenciesForm();
-            form.Ini(_projModel.PackageInfo.DependencyGroups.ToList(), _projModel.PackageInfo.Id);
+            form.Ini(_projModel.PackageInfo?.DependencyGroups?.ToList() ?? new List<PackageDependencyGroup>(), _projModel.PackageInfo?.Id ?? string.Empty);
             PackageDependenciesForm.SaveDependencyEvent += list =>
             {
                 _projModel.PackageInfo.DependencyGroups = list;

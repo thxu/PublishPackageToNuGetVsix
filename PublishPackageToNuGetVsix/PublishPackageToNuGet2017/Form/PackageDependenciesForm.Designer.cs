@@ -36,6 +36,7 @@
             this.btn_AddGroup = new System.Windows.Forms.Button();
             this.listView_GroupList = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.dg_PkgList = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,12 +61,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 414);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(712, 41);
+            this.panel1.Size = new System.Drawing.Size(759, 41);
             this.panel1.TabIndex = 0;
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.Location = new System.Drawing.Point(603, 9);
+            this.btn_Cancel.Location = new System.Drawing.Point(651, 9);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(95, 23);
             this.btn_Cancel.TabIndex = 1;
@@ -75,7 +76,7 @@
             // 
             // btn_ok
             // 
-            this.btn_ok.Location = new System.Drawing.Point(478, 9);
+            this.btn_ok.Location = new System.Drawing.Point(526, 9);
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(95, 23);
             this.btn_ok.TabIndex = 0;
@@ -133,6 +134,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dg_PkgList);
             this.groupBox1.Controls.Add(this.btn_OpenOnLinePkgListForm);
             this.groupBox1.Controls.Add(this.btn_AddPkg);
@@ -143,10 +145,19 @@
             this.groupBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(153, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(559, 396);
+            this.groupBox1.Size = new System.Drawing.Size(606, 396);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Group details";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(348, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(246, 12);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "eg：netstandard2.0，net45，net452等";
             // 
             // dg_PkgList
             // 
@@ -164,7 +175,7 @@
             this.dg_PkgList.RowHeadersVisible = false;
             this.dg_PkgList.RowTemplate.Height = 23;
             this.dg_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dg_PkgList.Size = new System.Drawing.Size(536, 317);
+            this.dg_PkgList.Size = new System.Drawing.Size(575, 317);
             this.dg_PkgList.TabIndex = 14;
             this.dg_PkgList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_PkgList_CellContentClick);
             // 
@@ -207,7 +218,7 @@
             // 
             this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
             this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_AddPkg.Location = new System.Drawing.Point(526, 364);
+            this.btn_AddPkg.Location = new System.Drawing.Point(566, 364);
             this.btn_AddPkg.Name = "btn_AddPkg";
             this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
             this.btn_AddPkg.TabIndex = 4;
@@ -218,7 +229,7 @@
             // 
             this.txtPkgVersion.Location = new System.Drawing.Point(239, 367);
             this.txtPkgVersion.Name = "txtPkgVersion";
-            this.txtPkgVersion.Size = new System.Drawing.Size(279, 21);
+            this.txtPkgVersion.Size = new System.Drawing.Size(321, 21);
             this.txtPkgVersion.TabIndex = 13;
             // 
             // txtPkgId
@@ -232,9 +243,9 @@
             // 
             this.txtTargetFramework.Location = new System.Drawing.Point(139, 14);
             this.txtTargetFramework.Name = "txtTargetFramework";
-            this.txtTargetFramework.Size = new System.Drawing.Size(415, 21);
+            this.txtTargetFramework.Size = new System.Drawing.Size(203, 21);
             this.txtTargetFramework.TabIndex = 8;
-            this.txtTargetFramework.Text = "如：netstandard2.0，net45等";
+            this.txtTargetFramework.Text = "net45";
             // 
             // label2
             // 
@@ -250,7 +261,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(712, 455);
+            this.ClientSize = new System.Drawing.Size(759, 455);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox_groups);
             this.Controls.Add(this.panel1);
@@ -286,5 +297,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.DataGridViewLinkColumn Op;
+        private System.Windows.Forms.Label label1;
     }
 }

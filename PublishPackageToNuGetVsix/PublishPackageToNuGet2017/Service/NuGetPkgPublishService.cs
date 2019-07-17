@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using NuGet.Common;
+using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
@@ -36,7 +37,7 @@ namespace PublishPackageToNuGet2017.Service
                 LibReleasePath = string.Empty,
                 Author = string.Empty,
                 Desc = string.Empty,
-                NetFrameworkVersion = project.Properties.Item("TargetFrameworkMoniker").Value.ToString(),
+                NetFrameworkVersion = NuGetFramework.Parse(project.Properties.Item("TargetFrameworkMoniker").Value.ToString()).GetShortFolderName(),
                 Owners = new List<string>(),
                 PackageInfo = new ManifestMetadata(),
                 Version = string.Empty,

@@ -192,7 +192,7 @@ namespace PublishPackageToNuGet2017.Form
                 return;
             }
 
-            if (txtPkgId.Text == "")
+            if (txtPkgId.Text == _currPkgId)
             {
                 MessageBox.Show("不能依赖自身");
                 return;
@@ -223,13 +223,15 @@ namespace PublishPackageToNuGet2017.Form
                 _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
             }
 
-            int index = this.dg_PkgList.Rows.Add();
-            DataGridViewTextBoxCell id = new DataGridViewTextBoxCell() { Value = txtPkgId.Text };
-            DataGridViewTextBoxCell version = new DataGridViewTextBoxCell() { Value = txtPkgVersion.Text };
-            DataGridViewLinkCell op = new DataGridViewLinkCell() { Value = "Delete", Tag = targetFrameWorkName };
-            this.dg_PkgList.Rows[index].Cells[0] = id;
-            this.dg_PkgList.Rows[index].Cells[1] = version;
-            this.dg_PkgList.Rows[index].Cells[2] = op;
+            ShowPkgListByGroupName(targetFrameWorkName);
+
+            //int index = this.dg_PkgList.Rows.Add();
+            //DataGridViewTextBoxCell id = new DataGridViewTextBoxCell() { Value = txtPkgId.Text };
+            //DataGridViewTextBoxCell version = new DataGridViewTextBoxCell() { Value = txtPkgVersion.Text };
+            //DataGridViewLinkCell op = new DataGridViewLinkCell() { Value = "Delete", Tag = targetFrameWorkName };
+            //this.dg_PkgList.Rows[index].Cells[0] = id;
+            //this.dg_PkgList.Rows[index].Cells[1] = version;
+            //this.dg_PkgList.Rows[index].Cells[2] = op;
 
             txtPkgId.Text = "";
             txtPkgVersion.Text = "";

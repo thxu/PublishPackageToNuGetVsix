@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="PublishPackageToNuGet2017.cc2f2e24-d338-4bda-a571-336d851406a1" Version="1.0" Language="en-US" Publisher="Company" />
-        <DisplayName>PublishPackageToNuGet2017</DisplayName>
-        <Description>Empty VSIX Project.</Description>
+        <Identity Id="PublishPackageToNuGet.436d4de6-e239-436a-afe7-24b9f3551e4w" Version="1.6.1" Language="zh-CN" Publisher="TangXu" />
+        <DisplayName>NuGetPackagePublishTool</DisplayName>
+        <Description xml:space="preserve">A tool to help you publish NuGet packages quickly in vs.</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
