@@ -95,7 +95,7 @@ namespace PublishPackageToNuGet2017.Form
         {
             var form = new PackageDependenciesForm();
             form.Ini(_projModel.PackageInfo?.DependencyGroups?.ToList() ?? new List<PackageDependencyGroup>(), _projModel.PackageInfo?.Id ?? string.Empty);
-            PackageDependenciesForm.SaveDependencyEvent += list =>
+            PackageDependenciesForm.SaveDependencyEvent = list =>
             {
                 _projModel.PackageInfo.DependencyGroups = list;
                 refreshDepency();

@@ -58,6 +58,9 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel1.Controls.Add(this.btn_Cancel);
             this.panel1.Controls.Add(this.btn_ok);
+            this.panel1.Controls.Add(this.txtPkgId);
+            this.panel1.Controls.Add(this.btn_AddPkg);
+            this.panel1.Controls.Add(this.txtPkgVersion);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 414);
             this.panel1.Name = "panel1";
@@ -137,9 +140,6 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dg_PkgList);
             this.groupBox1.Controls.Add(this.btn_OpenOnLinePkgListForm);
-            this.groupBox1.Controls.Add(this.btn_AddPkg);
-            this.groupBox1.Controls.Add(this.txtPkgVersion);
-            this.groupBox1.Controls.Add(this.txtPkgId);
             this.groupBox1.Controls.Add(this.txtTargetFramework);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -206,11 +206,12 @@
             // btn_OpenOnLinePkgListForm
             // 
             this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
-            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
             this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
-            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(26, 26);
+            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(134, 26);
             this.btn_OpenOnLinePkgListForm.TabIndex = 4;
+            this.btn_OpenOnLinePkgListForm.Text = "OnLine Feed";
             this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
             this.btn_OpenOnLinePkgListForm.Click += new System.EventHandler(this.btn_OpenOnLinePkgListForm_Click);
             // 
@@ -218,26 +219,29 @@
             // 
             this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
             this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_AddPkg.Location = new System.Drawing.Point(566, 364);
+            this.btn_AddPkg.Location = new System.Drawing.Point(3, 4);
             this.btn_AddPkg.Name = "btn_AddPkg";
             this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
             this.btn_AddPkg.TabIndex = 4;
             this.btn_AddPkg.UseVisualStyleBackColor = true;
+            this.btn_AddPkg.Visible = false;
             this.btn_AddPkg.Click += new System.EventHandler(this.btn_AddPkg_Click);
             // 
             // txtPkgVersion
             // 
-            this.txtPkgVersion.Location = new System.Drawing.Point(239, 367);
+            this.txtPkgVersion.Location = new System.Drawing.Point(199, 8);
             this.txtPkgVersion.Name = "txtPkgVersion";
             this.txtPkgVersion.Size = new System.Drawing.Size(321, 21);
             this.txtPkgVersion.TabIndex = 13;
+            this.txtPkgVersion.Visible = false;
             // 
             // txtPkgId
             // 
-            this.txtPkgId.Location = new System.Drawing.Point(50, 367);
+            this.txtPkgId.Location = new System.Drawing.Point(50, 9);
             this.txtPkgId.Name = "txtPkgId";
-            this.txtPkgId.Size = new System.Drawing.Size(181, 21);
+            this.txtPkgId.Size = new System.Drawing.Size(145, 21);
             this.txtPkgId.TabIndex = 12;
+            this.txtPkgId.Visible = false;
             // 
             // txtTargetFramework
             // 
@@ -269,6 +273,7 @@
             this.Name = "PackageDependenciesForm";
             this.Text = "PackageDependenciesForm";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.groupBox_groups.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

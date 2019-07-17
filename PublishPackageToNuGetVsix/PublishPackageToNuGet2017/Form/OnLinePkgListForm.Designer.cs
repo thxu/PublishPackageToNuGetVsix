@@ -56,6 +56,7 @@
             this.cbPackageSource.Name = "cbPackageSource";
             this.cbPackageSource.Size = new System.Drawing.Size(199, 20);
             this.cbPackageSource.TabIndex = 25;
+            this.cbPackageSource.SelectedIndexChanged += new System.EventHandler(this.cbPackageSource_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -99,7 +100,7 @@
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(95, 23);
             this.btn_ok.TabIndex = 0;
-            this.btn_ok.Text = "OK";
+            this.btn_ok.Text = "Ok";
             this.btn_ok.UseVisualStyleBackColor = true;
             this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
@@ -172,7 +173,6 @@
             this.Column3,
             this.Column4});
             this.dgv_PkgList.Location = new System.Drawing.Point(0, 37);
-            this.dgv_PkgList.MultiSelect = false;
             this.dgv_PkgList.Name = "dgv_PkgList";
             this.dgv_PkgList.ReadOnly = true;
             this.dgv_PkgList.RowHeadersVisible = false;
@@ -180,6 +180,7 @@
             this.dgv_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_PkgList.Size = new System.Drawing.Size(800, 375);
             this.dgv_PkgList.TabIndex = 29;
+            this.dgv_PkgList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_PkgList_CellDoubleClick);
             // 
             // Column1
             // 
@@ -213,6 +214,7 @@
             // 
             // OnLinePkgListForm
             // 
+            this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);

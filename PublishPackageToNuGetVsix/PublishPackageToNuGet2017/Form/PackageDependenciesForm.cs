@@ -1,12 +1,12 @@
-﻿using System;
-using NuGet.Frameworks;
+﻿using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Versioning;
+using PublishPackageToNuGet2017.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using PublishPackageToNuGet2017.Model;
 
 namespace PublishPackageToNuGet2017.Form
 {
@@ -225,13 +225,6 @@ namespace PublishPackageToNuGet2017.Form
 
             ShowPkgListByGroupName(targetFrameWorkName);
 
-            //int index = this.dg_PkgList.Rows.Add();
-            //DataGridViewTextBoxCell id = new DataGridViewTextBoxCell() { Value = txtPkgId.Text };
-            //DataGridViewTextBoxCell version = new DataGridViewTextBoxCell() { Value = txtPkgVersion.Text };
-            //DataGridViewLinkCell op = new DataGridViewLinkCell() { Value = "Delete", Tag = targetFrameWorkName };
-            //this.dg_PkgList.Rows[index].Cells[0] = id;
-            //this.dg_PkgList.Rows[index].Cells[1] = version;
-            //this.dg_PkgList.Rows[index].Cells[2] = op;
 
             txtPkgId.Text = "";
             txtPkgVersion.Text = "";
@@ -274,12 +267,79 @@ namespace PublishPackageToNuGet2017.Form
             OnLinePkgListForm form = new OnLinePkgListForm();
             form.Ini();
 
-            OnLinePkgListForm.AddPkgEvent += view =>
+            OnLinePkgListForm.AddPkgEvent = list =>
             {
-                txtPkgId.Text = view.Id;
-                txtPkgVersion.Text = view.Version;
+                if (AddPkgList(list))
+                {
+                    form.Close();
+                }
             };
             form.ShowDialog();
+        }
+
+        private bool AddPkgList(List<SimplePkgView> simplePkgList)
+        {
+            if (simplePkgList == null || !simplePkgList.Any())
+            {
+                return false;
+            }
+
+            var targetFrameWorkName = GetCurrSelectedGroup();
+            if (string.IsNullOrWhiteSpace(targetFrameWorkName))
+            {
+                // 没有选中框架，取用txtTargetFramework的值，若该值未创建组则自动创建一个
+                targetFrameWorkName = txtTargetFramework.Text;
+            }
+            var targetFrameWork = NuGetFramework.Parse(targetFrameWorkName);
+            if (targetFrameWork == null || targetFrameWork.IsUnsupported)
+            {
+                MessageBox.Show("NuGetFramework版本转换失败");
+                return false;
+            }
+
+            if (simplePkgList.Any(n => n.Id == _currPkgId))
+            {
+                MessageBox.Show("不能依赖自身");
+                return false;
+            }
+
+            var pkgGroup = _dependencyGroups.FirstOrDefault(n => n.TargetFramework.GetShortFolderName() == targetFrameWorkName);
+            List<PackageDependency> pkgList = new List<PackageDependency>();
+            if (pkgGroup == null)
+            {
+                foreach (SimplePkgView pkgView in simplePkgList)
+                {
+                    pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
+                }
+
+                _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
+                this.listView_GroupList.Items.Add(new ListViewItem() { Text = targetFrameWork.GetShortFolderName(), Selected = true });
+            }
+            else
+            {
+                if (pkgGroup.Packages != null)
+                {
+                    foreach (SimplePkgView pkgView in simplePkgList)
+                    {
+                        if (pkgGroup.Packages.Any(n => n.Id == pkgView.Id))
+                        {
+                            MessageBox.Show("当前NuGet包已添加");
+                            return false;
+                        }
+                    }
+                    pkgList = pkgGroup.Packages.ToList();
+                }
+                foreach (SimplePkgView pkgView in simplePkgList)
+                {
+                    pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
+                }
+
+                DeleteDelpendencyGroup(txtTargetFramework.Text);
+                _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
+            }
+
+            ShowPkgListByGroupName(targetFrameWorkName);
+            return true;
         }
 
         private void btn_Cancel_Click(object sender, System.EventArgs e)

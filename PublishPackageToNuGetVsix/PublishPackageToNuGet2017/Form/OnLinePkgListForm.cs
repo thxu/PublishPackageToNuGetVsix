@@ -2,6 +2,7 @@
 using PublishPackageToNuGet2017.Service;
 using PublishPackageToNuGet2017.Setting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace PublishPackageToNuGet2017.Form
 {
     public partial class OnLinePkgListForm : System.Windows.Forms.Form
     {
-        public static Action<SimplePkgView> AddPkgEvent;
+        public static Action<List<SimplePkgView>> AddPkgEvent;
 
 
         public OnLinePkgListForm()
@@ -38,6 +39,7 @@ namespace PublishPackageToNuGet2017.Form
                     cbPackageSource.SelectedItem = settingInfo.DefaultPackageSource;
                 }
             }
+            search(0);
         }
 
         private void search(int skip)
@@ -104,18 +106,51 @@ namespace PublishPackageToNuGet2017.Form
                 MessageBox.Show("您还未选择任何项");
                 return;
             }
-            var id = this.dgv_PkgList.SelectedRows[0].Cells[0].Value.ToString();
-            var version = this.dgv_PkgList.SelectedRows[0].Cells[1].Value.ToString();
-            var author = this.dgv_PkgList.SelectedRows[0].Cells[2].Value.ToString();
-            var desc = this.dgv_PkgList.SelectedRows[0].Cells[3].Value.ToString();
-            AddPkgEvent?.Invoke(new SimplePkgView()
+
+            List<SimplePkgView> pkgList = new List<SimplePkgView>();
+
+            foreach (DataGridViewRow row in dgv_PkgList.SelectedRows)
+            {
+                var id = row.Cells[0].Value.ToString();
+                var version = row.Cells[1].Value.ToString();
+                var author = row.Cells[2].Value.ToString();
+                var desc = row.Cells[3].Value.ToString();
+                SimplePkgView model = new SimplePkgView
+                {
+                    Author = author,
+                    Desc =desc,
+                    Id = id,
+                    Version = version
+                };
+                pkgList.Add(model);
+            }
+
+            AddPkgEvent?.Invoke(pkgList);
+            //this.Close();
+        }
+
+        private void cbPackageSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search(0);
+        }
+
+        private void dgv_PkgList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            List<SimplePkgView> pkgList = new List<SimplePkgView>();
+            var id = this.dgv_PkgList.Rows[e.RowIndex].Cells[0].Value.ToString();
+            var version = this.dgv_PkgList.Rows[e.RowIndex].Cells[1].Value.ToString();
+            var author = this.dgv_PkgList.Rows[e.RowIndex].Cells[2].Value.ToString();
+            var desc = this.dgv_PkgList.Rows[e.RowIndex].Cells[3].Value.ToString();
+            SimplePkgView model = new SimplePkgView
             {
                 Author = author,
                 Desc = desc,
                 Id = id,
-                Version = version,
-            });
-            this.Close();
+                Version = version
+            };
+            pkgList.Add(model);
+            AddPkgEvent?.Invoke(pkgList);
+            //this.Close();
         }
     }
 }
