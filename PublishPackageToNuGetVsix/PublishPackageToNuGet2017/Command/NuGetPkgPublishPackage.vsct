@@ -36,7 +36,7 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidPublishCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidNuGetPkgPublishPackageCmdSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
     </Groups>
@@ -52,8 +52,8 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidPublishCommandPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidPublishCommandPackageCmdSet" id="MyMenuGroup" />
+      <Button guid="guidNuGetPkgPublishPackageCmdSet" id="NuGetPkgPublishId" priority="0x0100" type="Button">
+        <Parent guid="guidNuGetPkgPublishPackageCmdSet" id="MyMenuGroup" />
         <!--<Icon guid="guidImages" id="bmpPic1" />-->
         <Strings>
           <ButtonText>NuGetPackagePublish</ButtonText>
@@ -74,12 +74,12 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidNuGetPkgPublishPackage" value="{fd36658a-3b0e-465f-b8bc-4f56329e2b53}" />
+    <GuidSymbol name="guidNuGetPkgPublishPackage" value="{33e5c7b0-6902-4211-84a5-1951482f21c4}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidPublishCommandPackageCmdSet" value="{fd6a0c34-31b3-4de3-bc9f-51eb0c9a2fc2}">
+    <GuidSymbol name="guidNuGetPkgPublishPackageCmdSet" value="{31996537-9480-4b34-b98e-89dee99343de}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="PublishCommandId" value="0x0100" />
+      <IDSymbol name="NuGetPkgPublishId" value="0x0100" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e00f1aa-0d39-4378-b4ec-ef5b1ac01c31}" >

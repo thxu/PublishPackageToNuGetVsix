@@ -25,7 +25,7 @@ namespace PublishPackageToNuGet2017.Command
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [ProvideOptionPage(typeof(OptionPageGrid), "PublishPackageSetting", "PackageSetting", 0, 0, true)]
+    [ProvideOptionPage(typeof(OptionPageGrid), "NugetPackagePublishToolSetting", "PackageSetting", 0, 0, true)]
 
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
@@ -37,7 +37,7 @@ namespace PublishPackageToNuGet2017.Command
         /// <summary>
         /// NuGetPkgPublishPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "fd36658a-3b0e-465f-b8bc-4f56329e2b53";
+        public const string PackageGuidString = "33e5c7b0-6902-4211-84a5-1951482f21c4";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NuGetPkgPublishPackage"/> class.

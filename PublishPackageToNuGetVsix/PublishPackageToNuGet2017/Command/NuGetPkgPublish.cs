@@ -29,7 +29,7 @@ namespace PublishPackageToNuGet2017.Command
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("fd6a0c34-31b3-4de3-bc9f-51eb0c9a2fc2");
+        public static readonly Guid CommandSet = new Guid("31996537-9480-4b34-b98e-89dee99343de");
 
         /// <summary>
         /// VS Package that provides this command, not null.

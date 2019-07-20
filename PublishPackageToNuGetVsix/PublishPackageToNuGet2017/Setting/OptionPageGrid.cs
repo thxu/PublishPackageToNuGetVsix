@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace PublishPackageToNuGet2017.Setting
 {
-    //[Guid("fdc69487-0b5a-4fba-8ee2-526d24db9495")]
+    [Guid("fdc69487-0b5a-4fba-8ee2-526d24db9495")]
     public class OptionPageGrid : DialogPage
     {
         [Category("NugetPackageSetting")]
