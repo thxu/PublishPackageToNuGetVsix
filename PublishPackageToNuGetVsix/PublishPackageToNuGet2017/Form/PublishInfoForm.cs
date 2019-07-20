@@ -57,7 +57,7 @@ namespace PublishPackageToNuGet2017.Form
                         var pkgList = dependencyGroup.Packages.ToList();
                         for (int i = 0; i < pkgList.Count(); i++)
                         {
-                            string txt = $"    {pkgList[i].Id} {pkgList[i].VersionRange.PrettyPrint()}";
+                            string txt = $"|__{pkgList[i].Id} {pkgList[i].VersionRange.PrettyPrint()}";
                             Label lbPkg = new Label
                             {
                                 Text = txt,

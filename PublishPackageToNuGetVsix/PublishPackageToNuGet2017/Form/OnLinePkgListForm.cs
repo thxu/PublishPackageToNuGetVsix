@@ -1,4 +1,5 @@
-﻿using PublishPackageToNuGet2017.Model;
+﻿using NuGet.Versioning;
+using PublishPackageToNuGet2017.Model;
 using PublishPackageToNuGet2017.Service;
 using PublishPackageToNuGet2017.Setting;
 using System;
@@ -64,6 +65,9 @@ namespace PublishPackageToNuGet2017.Form
 
                 skip += dataList.Count;
                 lb_CurrPage.Text = skip.ToString();
+
+                txt_CurrPkgId.Text = dataList[0].Id;
+                txt_CurrPkgVersion.Text = dataList[0].Version;
             }
         }
 
@@ -109,24 +113,44 @@ namespace PublishPackageToNuGet2017.Form
 
             List<SimplePkgView> pkgList = new List<SimplePkgView>();
 
-            foreach (DataGridViewRow row in dgv_PkgList.SelectedRows)
+            if (this.dgv_PkgList.SelectedRows.Count == 1
+                && !string.IsNullOrWhiteSpace(this.txt_CurrPkgId.Text)
+                && !string.IsNullOrWhiteSpace(this.txt_CurrPkgVersion.Text))
             {
-                var id = row.Cells[0].Value.ToString();
-                var version = row.Cells[1].Value.ToString();
-                var author = row.Cells[2].Value.ToString();
-                var desc = row.Cells[3].Value.ToString();
+                if (VersionRange.TryParse(txt_CurrPkgVersion.Text, out _) == false)
+                {
+                    MessageBox.Show("版本号格式错误");
+                    return;
+                }
                 SimplePkgView model = new SimplePkgView
                 {
-                    Author = author,
-                    Desc =desc,
-                    Id = id,
-                    Version = version
+                    Author = string.Empty,
+                    Desc = string.Empty,
+                    Id = this.txt_CurrPkgId.Text,
+                    Version = this.txt_CurrPkgVersion.Text
                 };
                 pkgList.Add(model);
             }
+            else
+            {
+                foreach (DataGridViewRow row in dgv_PkgList.SelectedRows)
+                {
+                    var id = row.Cells[0].Value.ToString();
+                    var version = row.Cells[1].Value.ToString();
+                    var author = row.Cells[2].Value.ToString();
+                    var desc = row.Cells[3].Value.ToString();
+                    SimplePkgView model = new SimplePkgView
+                    {
+                        Author = author,
+                        Desc = desc,
+                        Id = id,
+                        Version = version
+                    };
+                    pkgList.Add(model);
+                }
+            }
 
             AddPkgEvent?.Invoke(pkgList);
-            //this.Close();
         }
 
         private void cbPackageSource_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,7 +174,14 @@ namespace PublishPackageToNuGet2017.Form
             };
             pkgList.Add(model);
             AddPkgEvent?.Invoke(pkgList);
-            //this.Close();
+        }
+
+        private void dgv_PkgList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var id = this.dgv_PkgList.Rows[e.RowIndex].Cells[0].Value.ToString();
+            var version = this.dgv_PkgList.Rows[e.RowIndex].Cells[1].Value.ToString();
+            txt_CurrPkgId.Text = id;
+            txt_CurrPkgVersion.Text = version;
         }
     }
 }

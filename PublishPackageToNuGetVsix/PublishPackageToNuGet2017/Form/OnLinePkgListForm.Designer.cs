@@ -44,6 +44,10 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_CurrPkgId = new System.Windows.Forms.TextBox();
+            this.txt_CurrPkgVersion = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_PkgList)).BeginInit();
             this.SuspendLayout();
@@ -86,7 +90,7 @@
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.Location = new System.Drawing.Point(691, 9);
+            this.btn_Cancel.Location = new System.Drawing.Point(693, 9);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(95, 23);
             this.btn_Cancel.TabIndex = 1;
@@ -165,6 +169,7 @@
             // 
             this.dgv_PkgList.AllowUserToAddRows = false;
             this.dgv_PkgList.AllowUserToDeleteRows = false;
+            this.dgv_PkgList.AllowUserToResizeRows = false;
             this.dgv_PkgList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgv_PkgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -178,8 +183,9 @@
             this.dgv_PkgList.RowHeadersVisible = false;
             this.dgv_PkgList.RowTemplate.Height = 23;
             this.dgv_PkgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_PkgList.Size = new System.Drawing.Size(800, 375);
+            this.dgv_PkgList.Size = new System.Drawing.Size(800, 336);
             this.dgv_PkgList.TabIndex = 29;
+            this.dgv_PkgList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_PkgList_CellClick);
             this.dgv_PkgList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_PkgList_CellDoubleClick);
             // 
             // Column1
@@ -212,12 +218,48 @@
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 383);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "PackageId:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(427, 383);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 12);
+            this.label3.TabIndex = 31;
+            this.label3.Text = "PackageVersion:";
+            // 
+            // txt_CurrPkgId
+            // 
+            this.txt_CurrPkgId.Location = new System.Drawing.Point(92, 379);
+            this.txt_CurrPkgId.Name = "txt_CurrPkgId";
+            this.txt_CurrPkgId.Size = new System.Drawing.Size(258, 21);
+            this.txt_CurrPkgId.TabIndex = 32;
+            // 
+            // txt_CurrPkgVersion
+            // 
+            this.txt_CurrPkgVersion.Location = new System.Drawing.Point(530, 379);
+            this.txt_CurrPkgVersion.Name = "txt_CurrPkgVersion";
+            this.txt_CurrPkgVersion.Size = new System.Drawing.Size(258, 21);
+            this.txt_CurrPkgVersion.TabIndex = 33;
+            // 
             // OnLinePkgListForm
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txt_CurrPkgVersion);
+            this.Controls.Add(this.txt_CurrPkgId);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dgv_PkgList);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txt_PkgId);
@@ -252,5 +294,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txt_CurrPkgId;
+        private System.Windows.Forms.TextBox txt_CurrPkgVersion;
     }
 }

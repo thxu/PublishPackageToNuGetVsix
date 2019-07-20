@@ -279,67 +279,77 @@ namespace PublishPackageToNuGet2017.Form
 
         private bool AddPkgList(List<SimplePkgView> simplePkgList)
         {
-            if (simplePkgList == null || !simplePkgList.Any())
+            try
             {
-                return false;
-            }
-
-            var targetFrameWorkName = GetCurrSelectedGroup();
-            if (string.IsNullOrWhiteSpace(targetFrameWorkName))
-            {
-                // 没有选中框架，取用txtTargetFramework的值，若该值未创建组则自动创建一个
-                targetFrameWorkName = txtTargetFramework.Text;
-            }
-            var targetFrameWork = NuGetFramework.Parse(targetFrameWorkName);
-            if (targetFrameWork == null || targetFrameWork.IsUnsupported)
-            {
-                MessageBox.Show("NuGetFramework版本转换失败");
-                return false;
-            }
-
-            if (simplePkgList.Any(n => n.Id == _currPkgId))
-            {
-                MessageBox.Show("不能依赖自身");
-                return false;
-            }
-
-            var pkgGroup = _dependencyGroups.FirstOrDefault(n => n.TargetFramework.GetShortFolderName() == targetFrameWorkName);
-            List<PackageDependency> pkgList = new List<PackageDependency>();
-            if (pkgGroup == null)
-            {
-                foreach (SimplePkgView pkgView in simplePkgList)
+                if (simplePkgList == null || !simplePkgList.Any())
                 {
-                    pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
+                    return false;
                 }
 
-                _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
-                this.listView_GroupList.Items.Add(new ListViewItem() { Text = targetFrameWork.GetShortFolderName(), Selected = true });
-            }
-            else
-            {
-                if (pkgGroup.Packages != null)
+                var targetFrameWorkName = GetCurrSelectedGroup();
+                if (string.IsNullOrWhiteSpace(targetFrameWorkName))
+                {
+                    // 没有选中框架，取用txtTargetFramework的值，若该值未创建组则自动创建一个
+                    targetFrameWorkName = txtTargetFramework.Text;
+                }
+                var targetFrameWork = NuGetFramework.Parse(targetFrameWorkName);
+                if (targetFrameWork == null || targetFrameWork.IsUnsupported)
+                {
+                    MessageBox.Show("NuGetFramework版本转换失败");
+                    return false;
+                }
+
+                targetFrameWorkName = targetFrameWork.GetShortFolderName();
+
+                if (simplePkgList.Any(n => n.Id == _currPkgId))
+                {
+                    MessageBox.Show("不能依赖自身");
+                    return false;
+                }
+
+                var pkgGroup = _dependencyGroups.FirstOrDefault(n => n.TargetFramework.GetShortFolderName() == targetFrameWorkName);
+                List<PackageDependency> pkgList = new List<PackageDependency>();
+                if (pkgGroup == null)
                 {
                     foreach (SimplePkgView pkgView in simplePkgList)
                     {
-                        if (pkgGroup.Packages.Any(n => n.Id == pkgView.Id))
-                        {
-                            MessageBox.Show("当前NuGet包已添加");
-                            return false;
-                        }
+                        pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
                     }
-                    pkgList = pkgGroup.Packages.ToList();
+
+                    _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
+                    this.listView_GroupList.Items.Add(new ListViewItem() { Text = targetFrameWork.GetShortFolderName(), Selected = true });
                 }
-                foreach (SimplePkgView pkgView in simplePkgList)
+                else
                 {
-                    pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
+                    if (pkgGroup.Packages != null)
+                    {
+                        foreach (SimplePkgView pkgView in simplePkgList)
+                        {
+                            if (pkgGroup.Packages.Any(n => n.Id == pkgView.Id))
+                            {
+                                MessageBox.Show("当前NuGet包已添加");
+                                return false;
+                            }
+                        }
+                        pkgList = pkgGroup.Packages.ToList();
+                    }
+                    foreach (SimplePkgView pkgView in simplePkgList)
+                    {
+                        pkgList.Add(new PackageDependency(pkgView.Id, VersionRange.Parse(pkgView.Version)));
+                    }
+
+                    DeleteDelpendencyGroup(targetFrameWorkName);
+                    _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
                 }
 
-                DeleteDelpendencyGroup(txtTargetFramework.Text);
-                _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
+                ShowPkgListByGroupName(targetFrameWorkName);
+                return true;
             }
-
-            ShowPkgListByGroupName(targetFrameWorkName);
-            return true;
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
         }
 
         private void btn_Cancel_Click(object sender, System.EventArgs e)

@@ -150,6 +150,8 @@
             // 
             // panel_PkgDependencyGroup
             // 
+            this.panel_PkgDependencyGroup.AutoScroll = true;
+            this.panel_PkgDependencyGroup.AutoScrollMinSize = new System.Drawing.Size(400, 0);
             this.panel_PkgDependencyGroup.Location = new System.Drawing.Point(95, 315);
             this.panel_PkgDependencyGroup.Name = "panel_PkgDependencyGroup";
             this.panel_PkgDependencyGroup.Size = new System.Drawing.Size(484, 130);

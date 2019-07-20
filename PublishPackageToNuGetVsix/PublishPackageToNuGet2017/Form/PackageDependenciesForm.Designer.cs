@@ -31,6 +31,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_ok = new System.Windows.Forms.Button();
+            this.txtPkgId = new System.Windows.Forms.TextBox();
+            this.btn_AddPkg = new System.Windows.Forms.Button();
+            this.txtPkgVersion = new System.Windows.Forms.TextBox();
             this.groupBox_groups = new System.Windows.Forms.GroupBox();
             this.btn_DelGroup = new System.Windows.Forms.Button();
             this.btn_AddGroup = new System.Windows.Forms.Button();
@@ -42,9 +45,6 @@
             this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
             this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
-            this.btn_AddPkg = new System.Windows.Forms.Button();
-            this.txtPkgVersion = new System.Windows.Forms.TextBox();
-            this.txtPkgId = new System.Windows.Forms.TextBox();
             this.txtTargetFramework = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -87,6 +87,34 @@
             this.btn_ok.UseVisualStyleBackColor = true;
             this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
+            // txtPkgId
+            // 
+            this.txtPkgId.Location = new System.Drawing.Point(50, 9);
+            this.txtPkgId.Name = "txtPkgId";
+            this.txtPkgId.Size = new System.Drawing.Size(145, 21);
+            this.txtPkgId.TabIndex = 12;
+            this.txtPkgId.Visible = false;
+            // 
+            // btn_AddPkg
+            // 
+            this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
+            this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_AddPkg.Location = new System.Drawing.Point(3, 4);
+            this.btn_AddPkg.Name = "btn_AddPkg";
+            this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
+            this.btn_AddPkg.TabIndex = 4;
+            this.btn_AddPkg.UseVisualStyleBackColor = true;
+            this.btn_AddPkg.Visible = false;
+            this.btn_AddPkg.Click += new System.EventHandler(this.btn_AddPkg_Click);
+            // 
+            // txtPkgVersion
+            // 
+            this.txtPkgVersion.Location = new System.Drawing.Point(199, 8);
+            this.txtPkgVersion.Name = "txtPkgVersion";
+            this.txtPkgVersion.Size = new System.Drawing.Size(321, 21);
+            this.txtPkgVersion.TabIndex = 13;
+            this.txtPkgVersion.Visible = false;
+            // 
             // groupBox_groups
             // 
             this.groupBox_groups.Controls.Add(this.btn_DelGroup);
@@ -124,6 +152,7 @@
             // 
             // listView_GroupList
             // 
+            this.listView_GroupList.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listView_GroupList.GridLines = true;
             this.listView_GroupList.HideSelection = false;
             this.listView_GroupList.Location = new System.Drawing.Point(6, 41);
@@ -163,6 +192,7 @@
             // 
             this.dg_PkgList.AllowUserToAddRows = false;
             this.dg_PkgList.AllowUserToDeleteRows = false;
+            this.dg_PkgList.AllowUserToResizeRows = false;
             this.dg_PkgList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dg_PkgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dg_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -214,34 +244,6 @@
             this.btn_OpenOnLinePkgListForm.Text = "OnLine Feed";
             this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
             this.btn_OpenOnLinePkgListForm.Click += new System.EventHandler(this.btn_OpenOnLinePkgListForm_Click);
-            // 
-            // btn_AddPkg
-            // 
-            this.btn_AddPkg.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Add;
-            this.btn_AddPkg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_AddPkg.Location = new System.Drawing.Point(3, 4);
-            this.btn_AddPkg.Name = "btn_AddPkg";
-            this.btn_AddPkg.Size = new System.Drawing.Size(26, 26);
-            this.btn_AddPkg.TabIndex = 4;
-            this.btn_AddPkg.UseVisualStyleBackColor = true;
-            this.btn_AddPkg.Visible = false;
-            this.btn_AddPkg.Click += new System.EventHandler(this.btn_AddPkg_Click);
-            // 
-            // txtPkgVersion
-            // 
-            this.txtPkgVersion.Location = new System.Drawing.Point(199, 8);
-            this.txtPkgVersion.Name = "txtPkgVersion";
-            this.txtPkgVersion.Size = new System.Drawing.Size(321, 21);
-            this.txtPkgVersion.TabIndex = 13;
-            this.txtPkgVersion.Visible = false;
-            // 
-            // txtPkgId
-            // 
-            this.txtPkgId.Location = new System.Drawing.Point(50, 9);
-            this.txtPkgId.Name = "txtPkgId";
-            this.txtPkgId.Size = new System.Drawing.Size(145, 21);
-            this.txtPkgId.TabIndex = 12;
-            this.txtPkgId.Visible = false;
             // 
             // txtTargetFramework
             // 
