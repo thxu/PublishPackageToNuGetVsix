@@ -41,12 +41,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dg_PkgList = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
             this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
             this.txtTargetFramework = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.Op_Upd = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel1.SuspendLayout();
             this.groupBox_groups.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -198,7 +199,8 @@
             this.dg_PkgList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Version,
-            this.Op});
+            this.Op,
+            this.Op_Upd});
             this.dg_PkgList.Location = new System.Drawing.Point(18, 41);
             this.dg_PkgList.Name = "dg_PkgList";
             this.dg_PkgList.ReadOnly = true;
@@ -208,30 +210,6 @@
             this.dg_PkgList.Size = new System.Drawing.Size(575, 317);
             this.dg_PkgList.TabIndex = 14;
             this.dg_PkgList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_PkgList_CellContentClick);
-            // 
-            // Id
-            // 
-            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            // 
-            // Version
-            // 
-            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Version.HeaderText = "Version";
-            this.Version.Name = "Version";
-            this.Version.ReadOnly = true;
-            this.Version.Width = 150;
-            // 
-            // Op
-            // 
-            this.Op.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Op.HeaderText = "";
-            this.Op.Name = "Op";
-            this.Op.ReadOnly = true;
-            this.Op.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Op.Width = 90;
             // 
             // btn_OpenOnLinePkgListForm
             // 
@@ -262,6 +240,38 @@
             this.label2.Size = new System.Drawing.Size(117, 12);
             this.label2.TabIndex = 7;
             this.label2.Text = "Target framework";
+            // 
+            // Id
+            // 
+            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            // 
+            // Version
+            // 
+            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Version.HeaderText = "Version";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
+            this.Version.Width = 150;
+            // 
+            // Op
+            // 
+            this.Op.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Op.HeaderText = "";
+            this.Op.Name = "Op";
+            this.Op.ReadOnly = true;
+            this.Op.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Op.Width = 70;
+            // 
+            // Op_Upd
+            // 
+            this.Op_Upd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Op_Upd.HeaderText = "";
+            this.Op_Upd.Name = "Op_Upd";
+            this.Op_Upd.ReadOnly = true;
+            this.Op_Upd.Width = 70;
             // 
             // PackageDependenciesForm
             // 
@@ -301,9 +311,10 @@
         private System.Windows.Forms.Button btn_OpenOnLinePkgListForm;
         private System.Windows.Forms.Button btn_AddPkg;
         private System.Windows.Forms.DataGridView dg_PkgList;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.DataGridViewLinkColumn Op;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewLinkColumn Op_Upd;
     }
 }

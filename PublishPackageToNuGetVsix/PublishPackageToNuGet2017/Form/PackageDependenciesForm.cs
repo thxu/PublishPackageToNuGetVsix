@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using PublishPackageToNuGet2017.Service;
+using PublishPackageToNuGet2017.Setting;
 
 namespace PublishPackageToNuGet2017.Form
 {
@@ -62,9 +64,11 @@ namespace PublishPackageToNuGet2017.Form
                     DataGridViewTextBoxCell id = new DataGridViewTextBoxCell() { Value = package.Id };
                     DataGridViewTextBoxCell version = new DataGridViewTextBoxCell() { Value = package.VersionRange.OriginalString };
                     DataGridViewLinkCell op = new DataGridViewLinkCell() { Value = "Delete", Tag = groupName };
+                    DataGridViewLinkCell op1 = new DataGridViewLinkCell() { Value = "Update", Tag = groupName };
                     this.dg_PkgList.Rows[index].Cells[0] = id;
                     this.dg_PkgList.Rows[index].Cells[1] = version;
-                    this.dg_PkgList.Rows[index].Cells[2] = op;
+                    this.dg_PkgList.Rows[index].Cells[2] = op1;
+                    this.dg_PkgList.Rows[index].Cells[3] = op;
                 }
             }
         }
@@ -257,6 +261,17 @@ namespace PublishPackageToNuGet2017.Form
                 _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
 
                 this.dg_PkgList.Rows.RemoveAt(e.RowIndex);
+            }
+            else if (currCel.Value.ToString() == "Update")
+            {
+                var currId = this.dg_PkgList.Rows[e.RowIndex].Cells[0].Value.ToString();
+
+                PackageDetailsForm form = new PackageDetailsForm();
+                form.Ini(currId);
+                form.ShowDialog();
+
+                //OptionPageGrid settingInfo = NuGetPkgPublishService.GetSettingPage();
+                //var tmp = settingInfo.DefaultPackageSource.GetPkgDetailsByPkgId(currId);
             }
         }
 

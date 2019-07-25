@@ -217,6 +217,45 @@ namespace PublishPackageToNuGet2017.Service
             return null;
         }
 
+        public static List<SimplePkgView> GetPkgDetailsByPkgId(this string packageSourceUrl, string pkgId)
+        {
+            List<SimplePkgView> res = new List<SimplePkgView>();
+            try
+            {
+                var repository = PackageRepositoryFactory.CreateRepository(packageSourceUrl);
+                var packageMetadataResource = ThreadHelper.JoinableTaskFactory.Run((() => repository.GetResourceAsync<PackageMetadataResource>(CancellationToken.None)));
+                using (var sourceCacheContext = new SourceCacheContext())
+                {
+                    var query = ThreadHelper.JoinableTaskFactory.Run(() => packageMetadataResource.GetMetadataAsync(pkgId, false, false, sourceCacheContext, NullLogger.Instance, CancellationToken.None));
+
+                    query = query.OrderByDescending(p => p.Identity.Version);
+
+                    // now show packages
+                    res.AddRange(query.Select(CreatePackageInfo));
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return res;
+        }
+
+        private static SimplePkgView CreatePackageInfo(IPackageSearchMetadata packageSearchMetadata)
+        {
+            //var tmp = ThreadHelper.JoinableTaskFactory.Run(packageSearchMetadata.GetVersionsAsync);
+            return new SimplePkgView()
+            {
+                Author = packageSearchMetadata.Authors,
+                Desc = packageSearchMetadata.Description,
+                Id = packageSearchMetadata.Identity.Id,
+                Version = packageSearchMetadata.Identity.Version.OriginalVersion,
+                DownloadCount = packageSearchMetadata.DownloadCount.GetValueOrDefault(),
+                PublishDateTime = packageSearchMetadata.Published,
+            };
+        }
+
         public static string AddVersion(this string version)
         {
             if (string.IsNullOrWhiteSpace(version))
