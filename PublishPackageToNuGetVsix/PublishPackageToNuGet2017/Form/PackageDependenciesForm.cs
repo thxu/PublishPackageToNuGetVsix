@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using PublishPackageToNuGet2017.Service;
-using PublishPackageToNuGet2017.Setting;
 
 namespace PublishPackageToNuGet2017.Form
 {
@@ -268,10 +266,33 @@ namespace PublishPackageToNuGet2017.Form
 
                 PackageDetailsForm form = new PackageDetailsForm();
                 form.Ini(currId);
-                form.ShowDialog();
+                PackageDetailsForm.AddPkgEvent = view =>
+                {
+                    this.dg_PkgList.Rows[e.RowIndex].Cells[1].Value = view.Version;
+                    var targetFrameWorkName = currCel.Tag.ToString();
+                    var targetFrameWork = NuGetFramework.Parse(targetFrameWorkName);
+                    if (targetFrameWork == null || targetFrameWork.IsUnsupported)
+                    {
+                        MessageBox.Show("NuGetFramework版本转换失败");
+                        return;
+                    }
+                    var pkgGroup = _dependencyGroups.FirstOrDefault(n => n.TargetFramework.GetShortFolderName() == targetFrameWorkName);
+                    List<PackageDependency> pkgList = new List<PackageDependency>();
+                    if (pkgGroup == null)
+                    {
+                        return;
+                    }
+                    if (pkgGroup.Packages != null)
+                    {
+                        pkgList = pkgGroup.Packages.Where(n => n.Id != currId).ToList();
+                        pkgList.Add(new PackageDependency(currId, VersionRange.Parse(view.Version)));
+                    }
+                    DeleteDelpendencyGroup(txtTargetFramework.Text);
+                    _dependencyGroups.Add(new PackageDependencyGroup(targetFrameWork, pkgList));
 
-                //OptionPageGrid settingInfo = NuGetPkgPublishService.GetSettingPage();
-                //var tmp = settingInfo.DefaultPackageSource.GetPkgDetailsByPkgId(currId);
+                    form.Close();
+                };
+                form.ShowDialog();
             }
         }
 

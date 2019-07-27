@@ -9,7 +9,7 @@ namespace PublishPackageToNuGet2017.Form
 {
     public partial class PackageDetailsForm : System.Windows.Forms.Form
     {
-
+        public static Action<SimplePkgView> AddPkgEvent;
         private string _currPkgId;
 
         public PackageDetailsForm()
@@ -39,7 +39,7 @@ namespace PublishPackageToNuGet2017.Form
                     cbPackageSource.SelectedItem = settingInfo.DefaultPackageSource;
                 }
 
-                showPkgDetailList();
+                //showPkgDetailList();
             }
         }
 
@@ -57,12 +57,59 @@ namespace PublishPackageToNuGet2017.Form
                     DataGridViewTextBoxCell author = new DataGridViewTextBoxCell() { Value = simplePkgView.Author };
                     DataGridViewTextBoxCell desc = new DataGridViewTextBoxCell() { Value = simplePkgView.Desc };
                     DataGridViewTextBoxCell publishDate = new DataGridViewTextBoxCell() { Value = simplePkgView.PublishDateTime?.DateTime ?? DateTime.MinValue };
+                    DataGridViewTextBoxCell downloads = new DataGridViewTextBoxCell() { Value = simplePkgView.DownloadCount };
                     this.dgv_PkgDetails.Rows[index].Cells[0] = version;
                     this.dgv_PkgDetails.Rows[index].Cells[1] = desc;
-                    this.dgv_PkgDetails.Rows[index].Cells[2] = author;
-                    this.dgv_PkgDetails.Rows[index].Cells[3] = publishDate;
+                    this.dgv_PkgDetails.Rows[index].Cells[2] = publishDate;
+                    this.dgv_PkgDetails.Rows[index].Cells[3] = author;
                 }
             }
+        }
+
+        private void cbPackageSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            showPkgDetailList();
+        }
+
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dgv_PkgDetails_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var id = this._currPkgId;
+            var version = this.dgv_PkgDetails.Rows[e.RowIndex].Cells[0].Value.ToString();
+            SimplePkgView model = new SimplePkgView
+            {
+                Id = id,
+                Version = version
+            };
+            AddPkgEvent?.Invoke(model);
+        }
+
+        private void btn_ok_Click(object sender, EventArgs e)
+        {
+            if (this.dgv_PkgDetails.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("您还未选择依赖项");
+                return;
+            }
+
+            if (this.dgv_PkgDetails.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("只能选择一个依赖项");
+                return;
+            }
+
+            var id = this._currPkgId;
+            var version = this.dgv_PkgDetails.SelectedRows[0].Cells[0].Value.ToString();
+            SimplePkgView model = new SimplePkgView
+            {
+                Id = id,
+                Version = version
+            };
+            AddPkgEvent?.Invoke(model);
         }
     }
 }
