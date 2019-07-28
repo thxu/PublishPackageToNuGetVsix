@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
@@ -41,6 +42,7 @@ namespace PublishPackageToNuGet2017.Service
                 Owners = new List<string>(),
                 PackageInfo = new ManifestMetadata(),
                 Version = string.Empty,
+                ProjectPath = project.Properties.Item("FullPath").Value.ToString()
             };
 
             var outputType = project.Properties.Item("OutputType").Value.ToString();

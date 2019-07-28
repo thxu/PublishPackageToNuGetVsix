@@ -15,5 +15,12 @@ namespace PublishPackageToNuGet2017.Model
         public DateTimeOffset? PublishDateTime { get; set; }
 
         public long DownloadCount { get; set; }
+
+        public string TargetFramework { get; set; }
+    }
+
+    public class UpdatePkgView : SimplePkgView
+    {
+        public string OldVersion { get; set; }
     }
 }

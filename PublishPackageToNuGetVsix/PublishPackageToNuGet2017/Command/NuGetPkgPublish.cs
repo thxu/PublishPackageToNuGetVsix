@@ -116,8 +116,6 @@ namespace PublishPackageToNuGet2017.Command
                     throw new Exception("请先完善包设置信息");
                 }
 
-                //var tmp = NuGetPkgPublishService.GetAllPackageSources();
-
                 projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
                 projModel.Author = settingInfo.Authour;
                 projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string> { settingInfo.Authour };

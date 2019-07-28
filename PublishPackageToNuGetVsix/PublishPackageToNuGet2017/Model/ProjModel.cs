@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NuGet.Packaging;
+﻿using NuGet.Packaging;
+using System.Collections.Generic;
 
 namespace PublishPackageToNuGet2017.Model
 {
@@ -24,5 +24,7 @@ namespace PublishPackageToNuGet2017.Model
         public ManifestMetadata PackageInfo { get; set; }
 
         public string NetFrameworkVersion { get; set; }
+
+        public string ProjectPath { get; set; }
     }
 }

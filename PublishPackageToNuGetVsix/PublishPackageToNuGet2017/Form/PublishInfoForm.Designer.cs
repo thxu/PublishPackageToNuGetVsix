@@ -188,6 +188,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PublishInfoForm";
             this.Text = "PublishInfoForm";
+            this.Shown += new System.EventHandler(this.PublishInfoForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

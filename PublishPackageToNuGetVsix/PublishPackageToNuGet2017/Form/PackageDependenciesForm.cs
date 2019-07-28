@@ -22,7 +22,7 @@ namespace PublishPackageToNuGet2017.Form
             InitializeComponent();
         }
 
-        public void Ini(List<PackageDependencyGroup> groups, string currPkgId)
+        public void Ini(List<PackageDependencyGroup> groups, string currPkgId, string currTargetFramework)
         {
             _dependencyGroups = groups;
             _currPkgId = currPkgId;
@@ -47,6 +47,8 @@ namespace PublishPackageToNuGet2017.Form
             }
 
             ShowPkgListByGroupName(firstGroupName);
+
+            this.txtTargetFramework.Text = currTargetFramework;
         }
 
         private void ShowPkgListByGroupName(string groupName)

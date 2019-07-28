@@ -75,6 +75,12 @@
     <Compile Include="Form\PackageDetailsForm.Designer.cs">
       <DependentUpon>PackageDetailsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\PackageUpdateInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PackageUpdateInfoForm.Designer.cs">
+      <DependentUpon>PackageUpdateInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\PublishInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\PackageDetailsForm.resx">
       <DependentUpon>PackageDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PackageUpdateInfoForm.resx">
+      <DependentUpon>PackageUpdateInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\PublishInfoForm.resx">
       <DependentUpon>PublishInfoForm.cs</DependentUpon>

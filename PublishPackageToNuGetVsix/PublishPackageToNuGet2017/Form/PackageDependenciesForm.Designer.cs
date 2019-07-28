@@ -41,13 +41,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dg_PkgList = new System.Windows.Forms.DataGridView();
-            this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
-            this.txtTargetFramework = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Op = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Op_Upd = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.btn_OpenOnLinePkgListForm = new System.Windows.Forms.Button();
+            this.txtTargetFramework = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox_groups.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -211,36 +211,6 @@
             this.dg_PkgList.TabIndex = 14;
             this.dg_PkgList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_PkgList_CellContentClick);
             // 
-            // btn_OpenOnLinePkgListForm
-            // 
-            this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
-            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
-            this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
-            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(134, 26);
-            this.btn_OpenOnLinePkgListForm.TabIndex = 4;
-            this.btn_OpenOnLinePkgListForm.Text = "OnLine Feed";
-            this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
-            this.btn_OpenOnLinePkgListForm.Click += new System.EventHandler(this.btn_OpenOnLinePkgListForm_Click);
-            // 
-            // txtTargetFramework
-            // 
-            this.txtTargetFramework.Location = new System.Drawing.Point(139, 14);
-            this.txtTargetFramework.Name = "txtTargetFramework";
-            this.txtTargetFramework.Size = new System.Drawing.Size(203, 21);
-            this.txtTargetFramework.TabIndex = 8;
-            this.txtTargetFramework.Text = "net45";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(16, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(117, 12);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Target framework";
-            // 
             // Id
             // 
             this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -272,6 +242,35 @@
             this.Op_Upd.Name = "Op_Upd";
             this.Op_Upd.ReadOnly = true;
             this.Op_Upd.Width = 70;
+            // 
+            // btn_OpenOnLinePkgListForm
+            // 
+            this.btn_OpenOnLinePkgListForm.BackgroundImage = global::PublishPackageToNuGet2017.Properties.Resources.Properties;
+            this.btn_OpenOnLinePkgListForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btn_OpenOnLinePkgListForm.Location = new System.Drawing.Point(16, 364);
+            this.btn_OpenOnLinePkgListForm.Name = "btn_OpenOnLinePkgListForm";
+            this.btn_OpenOnLinePkgListForm.Size = new System.Drawing.Size(134, 26);
+            this.btn_OpenOnLinePkgListForm.TabIndex = 4;
+            this.btn_OpenOnLinePkgListForm.Text = "OnLine Feed";
+            this.btn_OpenOnLinePkgListForm.UseVisualStyleBackColor = true;
+            this.btn_OpenOnLinePkgListForm.Click += new System.EventHandler(this.btn_OpenOnLinePkgListForm_Click);
+            // 
+            // txtTargetFramework
+            // 
+            this.txtTargetFramework.Location = new System.Drawing.Point(139, 14);
+            this.txtTargetFramework.Name = "txtTargetFramework";
+            this.txtTargetFramework.Size = new System.Drawing.Size(203, 21);
+            this.txtTargetFramework.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(16, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(117, 12);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Target framework";
             // 
             // PackageDependenciesForm
             // 
