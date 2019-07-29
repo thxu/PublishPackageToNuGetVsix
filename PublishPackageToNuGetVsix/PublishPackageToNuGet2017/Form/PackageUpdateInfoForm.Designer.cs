@@ -121,6 +121,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chk_CheckAll.AutoSize = true;
+            this.chk_CheckAll.Checked = true;
+            this.chk_CheckAll.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_CheckAll.Location = new System.Drawing.Point(10, 5);
             this.chk_CheckAll.Name = "chk_CheckAll";
             this.chk_CheckAll.Size = new System.Drawing.Size(72, 16);

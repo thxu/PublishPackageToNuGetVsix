@@ -10,6 +10,8 @@ namespace PublishPackageToNuGet2017.Form
     {
         protected List<UpdatePkgView> _updatePkgViews;
         public static Action<Dictionary<string, List<UpdatePkgView>>> UpdPkgEvent;
+        private bool _IsListChanged = false;
+        private bool _IsChkAllChanged = false;
 
         public PackageUpdateInfoForm()
         {
@@ -33,6 +35,7 @@ namespace PublishPackageToNuGet2017.Form
                 lv_UpdPkgList.Columns[0].Width = -1;
                 lv_UpdPkgList.Columns[1].Width = -1;
                 chk_CheckAll.Checked = true;
+                this.chk_CheckAll.ThreeState = true;
             }
         }
 
@@ -43,16 +46,22 @@ namespace PublishPackageToNuGet2017.Form
 
         private void chk_CheckAll_CheckedChanged(object sender, EventArgs e)
         {
+            if (_IsListChanged)
+            {
+                return;
+            }
+
+            _IsChkAllChanged = true;
             foreach (ListViewItem item in lv_UpdPkgList.Items)
             {
-                item.Checked = chk_CheckAll.Checked;
+                item.Checked = chk_CheckAll.CheckState == CheckState.Checked;
             }
+            _IsChkAllChanged = false;
         }
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
             Dictionary<string, List<UpdatePkgView>> data = new Dictionary<string, List<UpdatePkgView>>();
-            List<UpdatePkgView> pkgList = new List<UpdatePkgView>();
             if (lv_UpdPkgList.CheckedItems.Count > 0)
             {
                 foreach (ListViewItem checkedItem in lv_UpdPkgList.CheckedItems)
@@ -74,15 +83,26 @@ namespace PublishPackageToNuGet2017.Form
 
         private void lv_UpdPkgList_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
+            if (_IsChkAllChanged)
+            {
+                return;
+            }
+            _IsListChanged = true;
             if (lv_UpdPkgList.CheckedItems.Count <= 0)
             {
-                this.chk_CheckAll.Checked = false;
+                //this.chk_CheckAll.Checked = false;
+                this.chk_CheckAll.CheckState = CheckState.Unchecked;
             }
-
-            if (lv_UpdPkgList.CheckedItems.Count == lv_UpdPkgList.Items.Count)
+            else if (lv_UpdPkgList.CheckedItems.Count == lv_UpdPkgList.Items.Count)
             {
-                this.chk_CheckAll.Checked = true;
+                //this.chk_CheckAll.Checked = true;
+                this.chk_CheckAll.CheckState = CheckState.Checked;
             }
+            else
+            {
+                this.chk_CheckAll.CheckState = CheckState.Indeterminate;
+            }
+            _IsListChanged = false;
         }
     }
 }
