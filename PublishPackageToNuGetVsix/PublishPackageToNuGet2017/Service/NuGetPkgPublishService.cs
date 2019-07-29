@@ -246,7 +246,7 @@ namespace PublishPackageToNuGet2017.Service
 
         private static SimplePkgView CreatePackageInfo(IPackageSearchMetadata packageSearchMetadata)
         {
-            var tmp = ThreadHelper.JoinableTaskFactory.Run(packageSearchMetadata.GetVersionsAsync);
+            //var tmp = ThreadHelper.JoinableTaskFactory.Run(packageSearchMetadata.GetVersionsAsync);
             return new SimplePkgView()
             {
                 Author = packageSearchMetadata.Authors,
