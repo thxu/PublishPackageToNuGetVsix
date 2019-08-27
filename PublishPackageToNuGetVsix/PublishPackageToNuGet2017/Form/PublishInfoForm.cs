@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using PublishPackageToNuGet2017.NuGetHelper;
 
 namespace PublishPackageToNuGet2017.Form
 {
@@ -81,43 +82,53 @@ namespace PublishPackageToNuGet2017.Form
         private Dictionary<string, List<SimplePkgView>> packagesConfigAnync()
         {
             Dictionary<string, List<SimplePkgView>> res = new Dictionary<string, List<SimplePkgView>>();
+            res = IsSkdStyleProject(_projModel.ProjectFullName) 
+                ? new NuGetPkgAnalysisFromNewCsproj().GetNuGetPkgs(_projModel) 
+                : new NuGetPkgAnalysisFromOldCsproj().GetNuGetPkgs(_projModel);
 
-            var configFilePath = Path.Combine(_projModel.ProjectPath, "packages.config");
-            if (File.Exists(configFilePath))
-            {
-                XElement pkgsElement = XDocument.Load(configFilePath).Element("packages");
-                if (pkgsElement == null)
-                {
-                    return res;
-                }
-                var allPkgs = pkgsElement.Elements("package");
-                foreach (XElement pkgElement in allPkgs)
-                {
-                    var id = pkgElement.Attribute("id")?.Value ?? string.Empty;
-                    var version = pkgElement.Attribute("version")?.Value ?? string.Empty;
-                    var targetFramework = pkgElement.Attribute("targetFramework")?.Value ?? string.Empty;
-                    if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(version))
-                    {
-                        SimplePkgView model = new SimplePkgView
-                        {
-                            Id = id,
-                            Version = version,
-                            TargetFramework = targetFramework,
-                        };
-                        if (res.ContainsKey(targetFramework))
-                        {
-                            res[targetFramework].Add(model);
-                        }
-                        else
-                        {
-                            res.Add(targetFramework, new List<SimplePkgView>() { model });
-                        }
+            //var configFilePath = Path.Combine(_projModel.ProjectPath, "packages.config");
+            //if (File.Exists(configFilePath))
+            //{
+            //    XElement pkgsElement = XDocument.Load(configFilePath).Element("packages");
+            //    if (pkgsElement == null)
+            //    {
+            //        return res;
+            //    }
+            //    var allPkgs = pkgsElement.Elements("package");
+            //    foreach (XElement pkgElement in allPkgs)
+            //    {
+            //        var id = pkgElement.Attribute("id")?.Value ?? string.Empty;
+            //        var version = pkgElement.Attribute("version")?.Value ?? string.Empty;
+            //        var targetFramework = pkgElement.Attribute("targetFramework")?.Value ?? string.Empty;
+            //        if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(version))
+            //        {
+            //            SimplePkgView model = new SimplePkgView
+            //            {
+            //                Id = id,
+            //                Version = version,
+            //                TargetFramework = targetFramework,
+            //            };
+            //            if (res.ContainsKey(targetFramework))
+            //            {
+            //                res[targetFramework].Add(model);
+            //            }
+            //            else
+            //            {
+            //                res.Add(targetFramework, new List<SimplePkgView>() { model });
+            //            }
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
 
             return res;
+        }
+
+        private bool IsSkdStyleProject(string projFullName)
+        {
+            XElement projElement = XDocument.Load(projFullName).Element("Project");
+            var sdk = projElement?.Attribute("Sdk")?.Value ?? string.Empty;
+            return !string.IsNullOrWhiteSpace(sdk);
         }
 
         private void btnPublish_Click(object sender, System.EventArgs e)
@@ -144,8 +155,42 @@ namespace PublishPackageToNuGet2017.Form
             form.Ini(_projModel.PackageInfo?.DependencyGroups?.ToList() ?? new List<PackageDependencyGroup>(), _projModel.PackageInfo?.Id ?? string.Empty, _projModel.NetFrameworkVersion);
             PackageDependenciesForm.SaveDependencyEvent = list =>
             {
-                _projModel.PackageInfo.DependencyGroups = list;
-                refreshDepency();
+                try
+                {
+                    if (_projModel.PackageInfo == null)
+                    {
+                        _projModel.PackageInfo = new ManifestMetadata
+                        {
+                            Authors = new List<string> { _projModel.Author },
+                            ContentFiles = new List<ManifestContentFiles>(),
+                            Copyright = $"CopyRight © {_projModel.Author} {DateTime.Now:yyyy-MM-dd HH:mm:ss}",
+                            DependencyGroups = new List<PackageDependencyGroup>(),
+                            Description = _projModel.Desc,
+                            DevelopmentDependency = false,
+                            FrameworkReferences = new List<FrameworkAssemblyReference>(),
+                            Id = _projModel.LibName,
+                            Language = null,
+                            MinClientVersionString = "1.0.0.0",
+                            Owners = new List<string> { _projModel.Author },
+                            PackageAssemblyReferences = new List<PackageReferenceSet>(),
+                            PackageTypes = new List<PackageType>(),
+                            ReleaseNotes = null,
+                            Repository = null,
+                            RequireLicenseAcceptance = false,
+                            Serviceable = false,
+                            Summary = null,
+                            Tags = string.Empty,
+                            Title = _projModel.LibName,
+                            Version = NuGetVersion.Parse(_projModel.Version),
+                        };
+                    }
+                    _projModel.PackageInfo.DependencyGroups = list;
+                    refreshDepency();
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             };
             form.ShowDialog();
         }
@@ -160,7 +205,7 @@ namespace PublishPackageToNuGet2017.Form
                 if (targetFrameworkDep == null)
                 {
                     updPkgList.AddRange(pkgView.Value.Select(n => new UpdatePkgView { Id = n.Id, Version = n.Version, TargetFramework = n.TargetFramework, OldVersion = null }));
-                    break;
+                    continue;
                 }
 
                 foreach (SimplePkgView view in pkgView.Value)

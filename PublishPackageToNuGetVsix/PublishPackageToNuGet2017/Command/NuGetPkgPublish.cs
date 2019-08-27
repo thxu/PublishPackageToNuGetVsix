@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using EnvDTE;
+﻿using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
+using NuGet.Packaging;
+using NuGet.Packaging.Core;
+using NuGet.Versioning;
 using PublishPackageToNuGet2017.Form;
 using PublishPackageToNuGet2017.Service;
 using PublishPackageToNuGet2017.Setting;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
 
 namespace PublishPackageToNuGet2017.Command
@@ -116,7 +116,30 @@ namespace PublishPackageToNuGet2017.Command
                     throw new Exception("请先完善包设置信息");
                 }
 
-                projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource);
+                projModel.PackageInfo = projModel.LibName.GetPackageData(settingInfo.DefaultPackageSource) ?? new ManifestMetadata
+                {
+                    Authors = new List<string> { projModel.Author },
+                    ContentFiles = new List<ManifestContentFiles>(),
+                    Copyright = $"CopyRight © {projModel.Author} {DateTime.Now:yyyy-MM-dd HH:mm:ss}",
+                    DependencyGroups = new List<PackageDependencyGroup>(),
+                    Description = projModel.Desc,
+                    DevelopmentDependency = false,
+                    FrameworkReferences = new List<FrameworkAssemblyReference>(),
+                    Id = projModel.LibName,
+                    Language = null,
+                    MinClientVersionString = "1.0.0.0",
+                    Owners = new List<string> { projModel.Author },
+                    PackageAssemblyReferences = new List<PackageReferenceSet>(),
+                    PackageTypes = new List<PackageType>(),
+                    ReleaseNotes = null,
+                    Repository = null,
+                    RequireLicenseAcceptance = false,
+                    Serviceable = false,
+                    Summary = null,
+                    Tags = string.Empty,
+                    Title = projModel.LibName,
+                    Version = NuGetVersion.Parse("1.0.0.0"),
+                };
                 projModel.Author = settingInfo.Authour;
                 projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string> { settingInfo.Authour };
                 projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;

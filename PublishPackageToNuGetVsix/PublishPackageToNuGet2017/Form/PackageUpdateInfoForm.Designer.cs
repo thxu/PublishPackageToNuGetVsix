@@ -53,7 +53,7 @@
             this.lv_UpdPkgList.HideSelection = false;
             this.lv_UpdPkgList.Location = new System.Drawing.Point(2, 61);
             this.lv_UpdPkgList.Name = "lv_UpdPkgList";
-            this.lv_UpdPkgList.Size = new System.Drawing.Size(264, 222);
+            this.lv_UpdPkgList.Size = new System.Drawing.Size(406, 237);
             this.lv_UpdPkgList.TabIndex = 0;
             this.lv_UpdPkgList.UseCompatibleStateImageBehavior = false;
             this.lv_UpdPkgList.View = System.Windows.Forms.View.Details;
@@ -73,7 +73,7 @@
             // 
             this.btn_ok.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_ok.Location = new System.Drawing.Point(33, 9);
+            this.btn_ok.Location = new System.Drawing.Point(175, 9);
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(95, 23);
             this.btn_ok.TabIndex = 29;
@@ -85,7 +85,7 @@
             // 
             this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Cancel.Location = new System.Drawing.Point(160, 9);
+            this.btn_Cancel.Location = new System.Drawing.Point(302, 9);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(95, 23);
             this.btn_Cancel.TabIndex = 30;
@@ -100,9 +100,9 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel1.Controls.Add(this.btn_ok);
             this.panel1.Controls.Add(this.btn_Cancel);
-            this.panel1.Location = new System.Drawing.Point(2, 306);
+            this.panel1.Location = new System.Drawing.Point(2, 321);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 41);
+            this.panel1.Size = new System.Drawing.Size(406, 41);
             this.panel1.TabIndex = 32;
             // 
             // panel2
@@ -110,9 +110,9 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.chk_CheckAll);
-            this.panel2.Location = new System.Drawing.Point(2, 284);
+            this.panel2.Location = new System.Drawing.Point(2, 299);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(264, 25);
+            this.panel2.Size = new System.Drawing.Size(406, 25);
             this.panel2.TabIndex = 33;
             // 
             // chk_CheckAll
@@ -146,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(268, 348);
+            this.ClientSize = new System.Drawing.Size(410, 363);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

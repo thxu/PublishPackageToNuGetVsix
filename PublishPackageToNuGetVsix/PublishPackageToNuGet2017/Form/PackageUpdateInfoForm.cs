@@ -24,12 +24,29 @@ namespace PublishPackageToNuGet2017.Form
 
             lv_UpdPkgList.View = View.Details;
             lv_UpdPkgList.CheckBoxes = true;
+            lv_UpdPkgList.ShowGroups = true;
             if (_updatePkgViews != null && _updatePkgViews.Any())
             {
+                List<ListViewGroup> listViewGroups = new List<ListViewGroup>();
                 foreach (UpdatePkgView view in _updatePkgViews)
                 {
                     var versionTmp = string.IsNullOrWhiteSpace(view.OldVersion) ? $"{view.Version}(New)" : $"{view.OldVersion} -> {view.Version}";
-                    lv_UpdPkgList.Items.Add(new ListViewItem() { Text = view.Id, SubItems = { versionTmp }, Tag = view, Checked = true });
+                    ListViewItem listViewItem = new ListViewItem() { Text = view.Id, SubItems = { versionTmp }, Tag = view, Checked = true };
+
+                    var group = listViewGroups.FirstOrDefault(n => n.Header == view.TargetFramework);
+                    if (group == null)
+                    {
+                        group = new ListViewGroup() { Header = view.TargetFramework };
+                        group.Items.Add(listViewItem);
+                        listViewGroups.Add(group);
+                        lv_UpdPkgList.Groups.Add(group);
+                    }
+                    else
+                    {
+                        group.Items.Add(listViewItem);
+                    }
+
+                    lv_UpdPkgList.Items.Add(listViewItem);
                 }
 
                 lv_UpdPkgList.Columns[0].Width = -1;

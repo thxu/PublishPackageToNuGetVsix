@@ -25,6 +25,10 @@ namespace PublishPackageToNuGet2017.Model
 
         public string NetFrameworkVersion { get; set; }
 
+        public List<string> NetFrameworkVersionList { get; set; }
+
         public string ProjectPath { get; set; }
+
+        public string ProjectFullName { get; set; }
     }
 }

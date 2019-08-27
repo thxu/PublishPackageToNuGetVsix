@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
@@ -38,14 +39,49 @@ namespace PublishPackageToNuGet2017.Service
                 LibReleasePath = string.Empty,
                 Author = string.Empty,
                 Desc = string.Empty,
-                NetFrameworkVersion = NuGetFramework.Parse(project.Properties.Item("TargetFrameworkMoniker").Value.ToString()).GetShortFolderName(),
+                NetFrameworkVersion = NuGetFramework.Parse(project.GetProjectProperty("TargetFrameworkMoniker")).GetShortFolderName(),
                 Owners = new List<string>(),
                 PackageInfo = new ManifestMetadata(),
                 Version = string.Empty,
-                ProjectPath = project.Properties.Item("FullPath").Value.ToString()
+                ProjectPath = project.GetProjectProperty("FullPath"),
+                NetFrameworkVersionList = new List<string>(),
+                ProjectFullName = projName
             };
 
+            var targetFrameworks = project.GetProjectProperty("TargetFrameworkMonikers");
+            if (!string.IsNullOrWhiteSpace(targetFrameworks))
+            {
+                var tmp = targetFrameworks.Split(';');
+                if (tmp.Length > 0)
+                {
+                    foreach (string target in tmp)
+                    {
+                        model.NetFrameworkVersionList.Add(NuGetFramework.Parse(target).GetShortFolderName());
+                    }
+                }
+            }
+
             var outputType = project.Properties.Item("OutputType").Value.ToString();
+
+            //string frameworkName = Assembly.GetExecutingAssembly().GetCustomAttributes(true)
+            //    .OfType<System.Runtime.Versioning.TargetFrameworkAttribute>()
+            //    .Select(x => x.FrameworkName)
+            //    .FirstOrDefault();
+
+            //StringBuilder tmp = new StringBuilder();
+            //foreach (Property property in project.Properties)
+            //{
+            //    try
+            //    {
+            //        var name = property.Name;
+            //        var val = property.Value;
+            //        tmp.Append($"{name}\t\t\t  {val} {Environment.NewLine}");
+            //    }
+            //    catch (Exception e)
+            //    {
+
+            //    }
+            //}
 
             if (outputType == "2")
             {
@@ -53,6 +89,19 @@ namespace PublishPackageToNuGet2017.Service
             }
 
             return null;
+        }
+
+        public static string GetProjectProperty(this Project project, string key)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            try
+            {
+                return (string)project.Properties.Item(key).Value;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
