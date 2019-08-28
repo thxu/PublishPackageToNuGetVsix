@@ -1,6 +1,7 @@
 ﻿using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using NuGet.Frameworks;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Versioning;
@@ -10,6 +11,7 @@ using PublishPackageToNuGet2017.Setting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
@@ -144,6 +146,18 @@ namespace PublishPackageToNuGet2017.Command
                 projModel.Owners = projModel.PackageInfo?.Owners ?? new List<string> { settingInfo.Authour };
                 projModel.Desc = projModel.PackageInfo?.Description ?? string.Empty;
                 projModel.Version = (projModel.PackageInfo?.Version?.OriginalVersion).AddVersion();
+
+                // 判断包是否有依赖项组，若没有则根据当前项目情况自动添加
+                List<PackageDependencyGroup> groupsTmp = projModel.PackageInfo.DependencyGroups.ToList();
+                foreach (string targetVersion in projModel.NetFrameworkVersionList)
+                {
+                    var targetFrameworkDep = projModel.PackageInfo.DependencyGroups.FirstOrDefault(n => n.TargetFramework.GetShortFolderName() == targetVersion);
+                    if (targetFrameworkDep == null)
+                    {
+                        groupsTmp.Add(new PackageDependencyGroup(NuGetFramework.Parse(targetVersion), new List<PackageDependency>()));
+                    }
+                }
+                projModel.PackageInfo.DependencyGroups = groupsTmp;
 
                 var form = new PublishInfoForm();
                 form.Ini(projModel);
