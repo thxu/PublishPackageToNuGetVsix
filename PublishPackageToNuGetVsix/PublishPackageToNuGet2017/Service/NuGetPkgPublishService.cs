@@ -18,8 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
@@ -59,6 +57,10 @@ namespace PublishPackageToNuGet2017.Service
                         model.NetFrameworkVersionList.Add(NuGetFramework.Parse(target).GetShortFolderName());
                     }
                 }
+            }
+            else
+            {
+                model.NetFrameworkVersionList.Add(model.NetFrameworkVersion);
             }
 
             var outputType = project.Properties.Item("OutputType").Value.ToString();
@@ -321,20 +323,26 @@ namespace PublishPackageToNuGet2017.Service
 
         public static string BuildPackage(this ProjModel pkg)
         {
-            string dllPath = Path.Combine(pkg.LibDebugPath, pkg.LibName + ".dll");
-            string xmlPath = Path.Combine(pkg.LibDebugPath, pkg.LibName + ".xml");
+            List<IPackageFile> files = new List<IPackageFile>();
 
-            if (!File.Exists(dllPath))
+            if (pkg.NetFrameworkVersionList.Count >= 2)
             {
-                throw new Exception("未找到DLL文件, 请先编译项目");
+                pkg.LibDebugPath = new DirectoryInfo(pkg.LibDebugPath).Parent?.FullName ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(pkg.LibDebugPath))
+                {
+                    throw new Exception("未找到DLL文件, 请先编译项目");
+                }
+
+                foreach (string dirname in pkg.NetFrameworkVersionList)
+                {
+                    files.AddRange(getPackageFiles(pkg, Path.Combine(pkg.LibDebugPath, dirname), dirname));
+                }
             }
-            MyPackageFile dllFile = new MyPackageFile("lib", pkg.LibName + ".dll", dllPath, pkg.NetFrameworkVersion);
-            List<IPackageFile> files = new List<IPackageFile>() { dllFile };
-            if (File.Exists(xmlPath))
+            else
             {
-                MyPackageFile xmlFile = new MyPackageFile("lib", pkg.LibName + ".xml", xmlPath, pkg.NetFrameworkVersion);
-                files.Add(xmlFile);
+                files.AddRange(getPackageFiles(pkg, pkg.LibDebugPath, pkg.NetFrameworkVersion));
             }
+
 
             ManifestMetadata data = pkg.PackageInfo ?? new ManifestMetadata
             {
@@ -383,6 +391,27 @@ namespace PublishPackageToNuGet2017.Service
             }
 
             return packageFile;
+        }
+
+        private static List<IPackageFile> getPackageFiles(this ProjModel pkg, string dirPath, string netFrameworkVersion)
+        {
+            List<IPackageFile> files = new List<IPackageFile>();
+            string dllPath = Path.Combine(dirPath, pkg.LibName + ".dll");
+            string xmlPath = Path.Combine(dirPath, pkg.LibName + ".xml");
+
+            if (!File.Exists(dllPath))
+            {
+                throw new Exception("未找到DLL文件, 请先编译项目");
+            }
+            MyPackageFile dllFile = new MyPackageFile("lib", pkg.LibName + ".dll", dllPath, netFrameworkVersion);
+            files.Add(dllFile);
+            if (File.Exists(xmlPath))
+            {
+                MyPackageFile xmlFile = new MyPackageFile("lib", pkg.LibName + ".xml", xmlPath, netFrameworkVersion);
+                files.Add(xmlFile);
+            }
+
+            return files;
         }
 
         public static bool PushToNugetSer(this string filePath, string publishKey, string publishUrl)
