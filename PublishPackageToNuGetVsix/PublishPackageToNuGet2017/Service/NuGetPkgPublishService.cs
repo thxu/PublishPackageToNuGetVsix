@@ -159,17 +159,26 @@ namespace PublishPackageToNuGet2017.Service
             return package?.GetDialogPage(typeof(OptionPageGrid)) as OptionPageGrid;
         }
 
-        public static List<string> GetAllPackageSources()
+        //public static List<string> GetAllPackageSources()
+        //{
+        //    IAsyncServiceProvider provider = GetSettingPackage();
+
+        //    var tmp = provider.GetServiceAsync(typeof(SComponentModel)).Result;
+
+        //    var componentModel = (IComponentModel)tmp;
+        //    if (componentModel == null) throw new ArgumentNullException(nameof(componentModel));
+        //    var sourcePorvider = componentModel.GetService<IVsPackageSourceProvider>();
+        //    var sc = sourcePorvider.GetSources(true, false);
+        //    return sc.Select(n => n.Value).ToList();
+        //}
+
+        public static IEnumerable<KeyValuePair<string, string>> GetAllPackageSources()
         {
             IAsyncServiceProvider provider = GetSettingPackage();
-
-            var tmp = provider.GetServiceAsync(typeof(SComponentModel)).Result;
-
-            var componentModel = (IComponentModel)tmp;
+            var componentModel = provider.GetServiceAsync(typeof(SComponentModel)).Result as IComponentModel;
             if (componentModel == null) throw new ArgumentNullException(nameof(componentModel));
-            var sourcePorvider = componentModel.GetService<IVsPackageSourceProvider>();
-            var sc = sourcePorvider.GetSources(true, false);
-            return sc.Select(n => n.Value).ToList();
+            var sourceProvider = componentModel.GetService<IVsPackageSourceProvider>();
+            return sourceProvider.GetSources(true, true);
         }
 
         public static ManifestMetadata GetPackageData(this string packageFullName, string packageSourceUrl)
@@ -316,8 +325,13 @@ namespace PublishPackageToNuGet2017.Service
                 return "1.0.0.1";
             }
             string[] tmp = version.Split('.');
-            int val = Convert.ToInt32(tmp[tmp.Length - 1]) + 1;
-            tmp[tmp.Length - 1] = val.ToString();
+            int val = 0;
+            string lastStr = tmp[tmp.Length - 1];
+            if (int.TryParse(lastStr, out val))
+            {
+                val += 1;
+                tmp[tmp.Length - 1] = val.ToString();
+            }
             return string.Join(".", tmp);
         }
 

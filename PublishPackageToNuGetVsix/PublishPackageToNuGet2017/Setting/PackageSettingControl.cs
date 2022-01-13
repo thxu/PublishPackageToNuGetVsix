@@ -19,7 +19,7 @@ namespace PublishPackageToNuGet2017.Setting
             try
             {
                 var sources = NuGetPkgPublishService.GetAllPackageSources();
-                OptionPage.AllPackageSource = sources;
+                OptionPage.AllPackageSource = sources.Select(n => n.Value).ToList();
             }
             catch (Exception ex)
             {

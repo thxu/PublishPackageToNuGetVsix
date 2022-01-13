@@ -62,7 +62,7 @@
             this.txtDesc.Multiline = true;
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.Size = new System.Drawing.Size(484, 70);
-            this.txtDesc.TabIndex = 44;
+            this.txtDesc.TabIndex = 1;
             // 
             // txtOwners
             // 
@@ -91,7 +91,6 @@
             this.txtVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtVersion.Enabled = false;
             this.txtVersion.Location = new System.Drawing.Point(95, 54);
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(484, 21);

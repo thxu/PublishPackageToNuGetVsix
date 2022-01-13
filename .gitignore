@@ -16,3 +16,5 @@
 /PublishPackageToNuGetVsix/.vs/PublishPackageToNuGetVsix/v17
 /PublishPackageToNuGetVsix/PublishPackageToNuGet2022/obj
 /PublishPackageToNuGetVsix/PublishPackageToNuGet2022/bin/Debug
+/PublishPackageToNuGetVsix/PublishPackageToNuGet2017/bin/Release
+/PublishPackageToNuGetVsix/PublishPackageToNuGet2017/obj/Release

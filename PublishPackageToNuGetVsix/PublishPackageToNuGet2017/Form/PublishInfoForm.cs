@@ -82,8 +82,8 @@ namespace PublishPackageToNuGet2017.Form
         private Dictionary<string, List<SimplePkgView>> packagesConfigAnync()
         {
             Dictionary<string, List<SimplePkgView>> res = new Dictionary<string, List<SimplePkgView>>();
-            res = IsSkdStyleProject(_projModel.ProjectFullName) 
-                ? new NuGetPkgAnalysisFromNewCsproj().GetNuGetPkgs(_projModel) 
+            res = IsSkdStyleProject(_projModel.ProjectFullName)
+                ? new NuGetPkgAnalysisFromNewCsproj().GetNuGetPkgs(_projModel)
                 : new NuGetPkgAnalysisFromOldCsproj().GetNuGetPkgs(_projModel);
 
             //var configFilePath = Path.Combine(_projModel.ProjectPath, "packages.config");
@@ -136,6 +136,7 @@ namespace PublishPackageToNuGet2017.Form
             try
             {
                 _projModel.Desc = txtDesc.Text;
+                _projModel.Version = txtVersion.Text;
                 if (string.IsNullOrWhiteSpace(_projModel.Desc))
                 {
                     MessageBox.Show("请输入描述信息");

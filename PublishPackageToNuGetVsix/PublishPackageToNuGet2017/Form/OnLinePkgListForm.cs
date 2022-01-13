@@ -31,7 +31,7 @@ namespace PublishPackageToNuGet2017.Form
                     cbPackageSource.Items.Add(sc);
                 }
 
-                if (string.IsNullOrWhiteSpace(settingInfo.DefaultPackageSource) || !sources.Contains(settingInfo.DefaultPackageSource))
+                if (string.IsNullOrWhiteSpace(settingInfo.DefaultPackageSource) || !sources.Any(n => n.Value == settingInfo.DefaultPackageSource))
                 {
                     cbPackageSource.SelectedIndex = 0;
                 }

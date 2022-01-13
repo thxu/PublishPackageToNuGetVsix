@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b0ac328d-c7b2-49f3-ac24-f3302bb1edca": {
+      "ProjectGuid": "b0ac328d-c7b2-49f3-ac24-f3302bb1edca",
+      "DisplayName": "PublishPackageToNuGet2022",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
