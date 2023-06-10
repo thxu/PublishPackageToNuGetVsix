@@ -349,7 +349,16 @@ namespace PublishPackageToNuGet2017.Service
 
                 foreach (string dirname in pkg.NetFrameworkVersionList)
                 {
-                    files.AddRange(getPackageFiles(pkg, Path.Combine(pkg.LibDebugPath, dirname), dirname));
+                    var dn=string.Empty;
+                    if(dirname.Contains("coreapp"))
+                    {
+                        dn = dirname.Replace("coreapp", "");
+                    }
+                    else
+                    {
+                        dn = dirname;
+                    }
+                    files.AddRange(getPackageFiles(pkg, Path.Combine(pkg.LibDebugPath, dn), dn));
                 }
             }
             else
