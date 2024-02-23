@@ -44,7 +44,7 @@ namespace PublishPackageToNuGet2017.Service
                 ProjectPath = project.GetProjectProperty("FullPath"),
                 NetFrameworkVersionList = new List<string>(),
                 ProjectFullName = projName
-            };
+            }; 
 
             var targetFrameworks = project.GetProjectProperty("TargetFrameworkMonikers");
             if (!string.IsNullOrWhiteSpace(targetFrameworks))

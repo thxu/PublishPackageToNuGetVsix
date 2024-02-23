@@ -37,7 +37,7 @@ namespace PublishPackageToNuGet2017.Form
                 }
                 else
                 {
-                    cbPackageSource.SelectedItem = settingInfo.DefaultPackageSource;
+                    cbPackageSource.SelectedItem = sources.First(n => n.Value == settingInfo.DefaultPackageSource);
                 }
             }
             search(0);
@@ -45,7 +45,7 @@ namespace PublishPackageToNuGet2017.Form
 
         private void search(int skip)
         {
-            var currSource = cbPackageSource.SelectedItem.ToString();
+            var currSource = (cbPackageSource.SelectedItem as KeyValuePair<string,string>?)?.Value;
             var dataList = currSource.GetPkgList(txt_PkgId.Text, skip);
             this.dgv_PkgList.Rows.Clear();
             if (dataList != null && dataList.Any())
